@@ -26,7 +26,7 @@ class _CircolarePageState extends State<CircolarePage> {
                 child: ListView.builder(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   itemCount: widget.circolare.fields.length,
-                  itemBuilder: (context, index) => widget.circolare.fields[index].toWidget(),
+                  itemBuilder: (context, index) => widget.circolare.fields[index],
                 ),
               ),
               Container(
