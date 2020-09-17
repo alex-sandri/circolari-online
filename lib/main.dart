@@ -1,3 +1,4 @@
+import 'package:circolari_online/models/Circolare.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -10,7 +11,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  List<dynamic> _circolari = [];
+  List<Circolare> _circolari = [];
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class _MyAppState extends State<MyApp> {
           separatorBuilder: (context, index) => Divider(),
           itemCount: _circolari.length,
           itemBuilder: (context, index) {
-            final dynamic circolare = _circolari[index];
+            final Circolare circolare = _circolari[index];
 
             return ListTile(
               // TODO
