@@ -38,19 +38,15 @@ class CircolareField<T>
 
   Widget toWidget() {
     if (T == bool)
-      return Builder(
-        builder: (context) {
-          return StatefulBuilder(
-            builder: (context, StateSetter setState) {
-              return CheckboxListTile(
-                title: Text(label),
-                value: _value as bool ?? false,
-                onChanged: (checked) =>
-                  setState(() => _value = checked as T),
-              );
-            }
+      return StatefulBuilder(
+        builder: (context, StateSetter setState) {
+          return CheckboxListTile(
+            title: Text(label),
+            value: _value as bool ?? false,
+            onChanged: (checked) =>
+              setState(() => _value = checked as T),
           );
-        },
+        }
       );
 
     return TextField(
