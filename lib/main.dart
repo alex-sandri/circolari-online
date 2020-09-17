@@ -30,7 +30,7 @@ class _MyAppState extends State<MyApp> {
             final Circolare circolare = _circolari[index];
 
             return ListTile(
-              // TODO
+              title: Text(circolare.title),
             );
           },
         ),
