@@ -18,7 +18,10 @@ class _CircolarePageState extends State<CircolarePage> {
         appBar: AppBar(
           title: Text(widget.circolare.title),
         ),
-        body: Container(),
+        body: ListView.builder(
+          itemCount: widget.circolare.fields.length,
+          itemBuilder: (context, index) => widget.circolare.fields[index].toWidget(),
+        ),
       ),
     );
   }
