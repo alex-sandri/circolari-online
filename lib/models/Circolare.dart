@@ -50,7 +50,7 @@ class CircolareField<T>
       );
 
     return TextField(
-      controller: TextEditingController()..text = defaultValue.toString(),
+      controller: TextEditingController()..text = defaultValue?.toString(),
       keyboardType: [ num, int, double ].contains(T) ? TextInputType.number : TextInputType.text,
       decoration: InputDecoration(
         labelText: label,

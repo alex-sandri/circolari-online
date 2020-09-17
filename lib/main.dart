@@ -55,7 +55,6 @@ class _MyAppState extends State<MyApp> {
                       minLength: 1,
                       maxLength: 10,
                     ),
-                    defaultValue: "DEFAULT",
                   ),
                   CircolareField<int>(
                     label: "INTEGER",
