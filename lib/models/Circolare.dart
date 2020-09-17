@@ -31,6 +31,10 @@ class CircolareField<T>
     if (!<Type>[ String, num, int, double, bool ].contains(T))
       throw ArgumentError("Only String, num, int, double and bool are supported types");
   }
+
+  Widget toWidget() {
+    // TODO
+  }
 }
 
 class CircolareFieldConstraints
