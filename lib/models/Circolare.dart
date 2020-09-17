@@ -56,38 +56,41 @@ class CircolareField<T>
         labelText: label,
       ),
       onChanged: (value) {
-        _value = value as T;
+        _value = value is T ? value as T : null;
 
         if (constraints == null) return;
 
         String error;
 
-        switch (T)
-        {
-          case String:
+        if (!(constraints.regex?.hasMatch(value) ?? true))
+          error = "REGEX_NO_MATCH";
+        else
+          switch (T)
+          {
+            case String:
 
-            if (value.length < constraints.minLength)
-              error = "MIN_LENGTH";
-            else if (value.length > constraints.maxLength)
-              error = "MAX_LENGTH";
+              if (value.length < constraints.minLength)
+                error = "MIN_LENGTH";
+              else if (value.length > constraints.maxLength)
+                error = "MAX_LENGTH";
 
-            break;
-          case num:
-          case int:
-          case double:
-            final num number = num.tryParse(value);
+              break;
+            case num:
+            case int:
+            case double:
+              final num number = num.tryParse(value);
 
-            if (number == null)
-              error = "INVALID_NUM";
-            else if (T == int && number.toInt() != number)
-              error = "NUM_NO_INT";
-            else if (number < constraints.min)
-              error = "MIN_NUM";
-            else if (number > constraints.max)
-              error = "MAX_NUM";
+              if (number == null)
+                error = "INVALID_NUM";
+              else if (T == int && number.toInt() != number)
+                error = "NUM_NO_INT";
+              else if (number < constraints.min)
+                error = "MIN_NUM";
+              else if (number > constraints.max)
+                error = "MAX_NUM";
 
-            break;
-        }
+              break;
+          }
 
         print(error);
       },
