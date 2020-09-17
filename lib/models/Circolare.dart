@@ -20,6 +20,10 @@ class CircolareField<T>
 
   final T defaultValue;
 
+  T _value;
+
+  T get value => _value;
+
   CircolareField({
     @required this.label,
     this.constraints,
@@ -28,21 +32,21 @@ class CircolareField<T>
   {
     if (!<Type>[ String, num, int, double, bool ].contains(T))
       throw ArgumentError("Only String, num, int, double and bool are supported types");
+
+    _value = defaultValue;
   }
 
   Widget toWidget() {
     if (T == bool)
       return Builder(
         builder: (context) {
-          bool value = defaultValue as bool;
-
           return StatefulBuilder(
             builder: (context, StateSetter setState) {
               return CheckboxListTile(
                 title: Text(label),
-                value: value,
+                value: _value as bool ?? false,
                 onChanged: (checked) =>
-                  setState(() => value = checked),
+                  setState(() => _value = checked as T),
               );
             }
           );
@@ -56,6 +60,8 @@ class CircolareField<T>
         labelText: label,
       ),
       onChanged: (value) {
+        _value = value as T;
+
         if (constraints == null) return;
 
         String error;
