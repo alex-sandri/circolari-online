@@ -16,6 +16,13 @@ class MyApp extends StatelessWidget {
           title: Text("Circolari Online"),
         ),
         body: Container(),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          tooltip: "Crea nuova circolare",
+          onPressed: () {
+            // TODO
+          },
+        ),
       ),
       debugShowCheckedModeBanner: false,
     );
