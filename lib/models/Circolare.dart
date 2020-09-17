@@ -50,6 +50,7 @@ class CircolareField<T>
       );
 
     return TextField(
+      keyboardType: [ num, int, double ].contains(T) ? TextInputType.number : TextInputType.text,
       decoration: InputDecoration(
         labelText: label,
       ),
