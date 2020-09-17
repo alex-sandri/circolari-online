@@ -5,6 +5,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  List<dynamic> _circolari = [];
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -15,7 +17,17 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           title: Text("Circolari Online"),
         ),
-        body: Container(),
+        body: ListView.separated(
+          separatorBuilder: (context, index) => Divider(),
+          itemCount: _circolari.length,
+          itemBuilder: (context, index) {
+            final dynamic circolare = _circolari[index];
+
+            return ListTile(
+              // TODO
+            );
+          },
+        ),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           tooltip: "Crea nuova circolare",
