@@ -1,0 +1,63 @@
+import 'package:flutter/material.dart';
+
+class Circolare
+{
+  final String title;
+
+  final List<CircolareField> fields;
+
+  Circolare({
+    @required this.title,
+    @required this.fields,
+  });
+}
+
+class CircolareField
+{
+  final CircolareFieldType type;
+
+  final String label;
+
+  final CircolareFieldConstraints constraints;
+
+  dynamic defaultValue;
+
+  CircolareField({
+    @required this.type,
+    @required this.label,
+    @required this.constraints,
+    this.defaultValue,
+  });
+}
+
+enum CircolareFieldType
+{
+  STRING,
+
+  NUMBER,
+
+  INTEGER,
+
+  DOUBLE,
+
+  BOOL,
+}
+
+class CircolareFieldConstraints
+{
+  final RegExp regex;
+
+  final int minLength;
+  final int maxLength;
+
+  final num min;
+  final num max;
+
+  CircolareFieldConstraints({
+    this.regex,
+    this.minLength,
+    this.maxLength,
+    this.min,
+    this.max,
+  });
+}
