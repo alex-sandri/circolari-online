@@ -12,35 +12,19 @@ class Circolare
   });
 }
 
-class CircolareField
+class CircolareField<T>
 {
-  final CircolareFieldType type;
-
   final String label;
 
   final CircolareFieldConstraints constraints;
 
-  dynamic defaultValue;
+  T defaultValue;
 
   CircolareField({
-    @required this.type,
     @required this.label,
     @required this.constraints,
     this.defaultValue,
   });
-}
-
-enum CircolareFieldType
-{
-  STRING,
-
-  NUMBER,
-
-  INTEGER,
-
-  DOUBLE,
-
-  BOOL,
 }
 
 class CircolareFieldConstraints
