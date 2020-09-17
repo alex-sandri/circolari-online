@@ -20,10 +20,32 @@ class _CircolarePageState extends State<CircolarePage> {
           appBar: AppBar(
             title: Text(widget.circolare.title),
           ),
-          body: ListView.builder(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            itemCount: widget.circolare.fields.length,
-            itemBuilder: (context, index) => widget.circolare.fields[index].toWidget(),
+          body: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              ListView.builder(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                shrinkWrap: true,
+                itemCount: widget.circolare.fields.length,
+                itemBuilder: (context, index) => widget.circolare.fields[index].toWidget(),
+              ),
+              Container(
+                width: double.infinity,
+                child: FlatButton(
+                  child: Text("Invia"),
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.zero,
+                  ),
+                  padding: const EdgeInsets.all(16),
+                  color: Theme.of(context).accentColor,
+                  colorBrightness: Theme.of(context).accentColorBrightness,
+                  onPressed: () {
+                    // TODO
+                  },
+                ),
+              ),
+            ],
           ),
         ),
       ),
