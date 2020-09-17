@@ -21,13 +21,13 @@ class _CircolarePageState extends State<CircolarePage> {
             title: Text(widget.circolare.title),
           ),
           body: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              ListView.builder(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                shrinkWrap: true,
-                itemCount: widget.circolare.fields.length,
-                itemBuilder: (context, index) => widget.circolare.fields[index].toWidget(),
+              Expanded(
+                child: ListView.builder(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  itemCount: widget.circolare.fields.length,
+                  itemBuilder: (context, index) => widget.circolare.fields[index].toWidget(),
+                ),
               ),
               Container(
                 width: double.infinity,
