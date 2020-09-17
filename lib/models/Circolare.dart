@@ -24,7 +24,7 @@ class CircolareField<T>
 
   CircolareField({
     @required this.label,
-    @required this.constraints,
+    this.constraints,
     this.defaultValue,
   })
   {
