@@ -1,4 +1,5 @@
 import 'package:circolari_online/models/Circolare.dart';
+import 'package:circolari_online/widget/CircolarePage.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -31,6 +32,12 @@ class _MyAppState extends State<MyApp> {
 
             return ListTile(
               title: Text(circolare.title),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CircolarePage(circolare)
+                ),
+              ),
             );
           },
         ),
