@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 class Circolare
@@ -24,7 +26,11 @@ class CircolareField<T>
     @required this.label,
     @required this.constraints,
     this.defaultValue,
-  });
+  })
+  {
+    if (!<Type>[ String, num, int, double, bool ].contains(T))
+      throw ArgumentError("Only String, num, int, double and bool are supported types");
+  }
 }
 
 class CircolareFieldConstraints
