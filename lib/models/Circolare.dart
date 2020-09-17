@@ -91,8 +91,6 @@ class CircolareField<T>
 
               break;
           }
-
-        print(error);
       },
     );
   }
