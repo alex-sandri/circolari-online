@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 
 class Circolare
@@ -20,7 +18,7 @@ class CircolareField<T>
 
   final CircolareFieldConstraints constraints;
 
-  T defaultValue;
+  final T defaultValue;
 
   CircolareField({
     @required this.label,
