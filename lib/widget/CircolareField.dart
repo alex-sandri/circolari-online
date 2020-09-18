@@ -58,7 +58,7 @@ class _CircolareFieldState<T> extends State<CircolareField<T>> {
         if (widget.constraints == null) return;
 
         if (!(widget.constraints.regex?.hasMatch(value) ?? true))
-          _error = "REGEX_NO_MATCH";
+          _error = "Il valore inserito non rispetta il formato previsto";
         else
           switch (T)
           {
