@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 class CircolarePage extends StatelessWidget {
   final Circolare circolare;
 
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   CircolarePage(this.circolare);
 
   @override
@@ -18,10 +20,14 @@ class CircolarePage extends StatelessWidget {
           body: Column(
             children: [
               Expanded(
-                child: ListView.builder(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  itemCount: circolare.fields.length,
-                  itemBuilder: (context, index) => circolare.fields[index],
+                child: Form(
+                  key: _formKey,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  child: ListView.builder(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    itemCount: circolare.fields.length,
+                    itemBuilder: (context, index) => circolare.fields[index],
+                  ),
                 ),
               ),
               Container(
@@ -36,7 +42,7 @@ class CircolarePage extends StatelessWidget {
                   color: Theme.of(context).accentColor,
                   colorBrightness: Theme.of(context).accentColorBrightness,
                   onPressed: () {
-                    // TODO
+                    print(_formKey.currentState.validate());
                   },
                 ),
               ),
