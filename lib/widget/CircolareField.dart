@@ -30,21 +30,23 @@ class CircolareField<T> extends StatefulWidget
 }
 
 class _CircolareFieldState<T> extends State<CircolareField<T>> {
-  T _value;
+  bool _checked;
 
   String _error;
 
   @override
   Widget build(BuildContext context) {
-    _value ??= widget.defaultValue;
-
     if (T == bool)
+    {
+      _checked ??= widget.defaultValue as bool;
+
       return CheckboxListTile(
         title: Text(widget.label),
-        value: _value as bool ?? false,
+        value: _checked ?? false,
         onChanged: (checked) =>
-          setState(() => _value = checked as T),
+          setState(() => _checked = checked),
       );
+    }
 
     return TextField(
       controller: widget.controller,
@@ -55,8 +57,6 @@ class _CircolareFieldState<T> extends State<CircolareField<T>> {
       ),
       onChanged: (value) {
         _error = null;
-
-        _value = value is T ? value as T : null;
 
         if (widget.constraints == null) return;
 
