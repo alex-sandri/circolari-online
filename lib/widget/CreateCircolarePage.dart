@@ -1,6 +1,9 @@
+import 'package:circolari_online/widget/CircolareField.dart';
 import 'package:flutter/material.dart';
 
 class CreateCircolarePage extends StatelessWidget {
+  final List<CircolareField> fields = [];
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -13,7 +16,12 @@ class CreateCircolarePage extends StatelessWidget {
           body: Column(
             children: [
               Expanded(
-                child: Container(),
+                child: ReorderableListView(
+                  onReorder: (oldIndex, newIndex) {
+                    // TODO
+                  },
+                  children: fields,
+                ),
               ),
               Container(
                 width: double.infinity,
@@ -32,6 +40,26 @@ class CreateCircolarePage extends StatelessWidget {
                 ),
               ),
             ],
+          ),
+          floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.add),
+            tooltip: "Aggiungi campo",
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) => Dialog(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text("TEST"),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            },
           ),
         ),
       ),
