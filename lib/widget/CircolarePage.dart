@@ -1,16 +1,11 @@
 import 'package:circolari_online/models/Circolare.dart';
 import 'package:flutter/material.dart';
 
-class CircolarePage extends StatefulWidget {
+class CircolarePage extends StatelessWidget {
   final Circolare circolare;
 
   CircolarePage(this.circolare);
 
-  @override
-  _CircolarePageState createState() => _CircolarePageState();
-}
-
-class _CircolarePageState extends State<CircolarePage> {
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -18,15 +13,15 @@ class _CircolarePageState extends State<CircolarePage> {
         onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
         child: Scaffold(
           appBar: AppBar(
-            title: Text(widget.circolare.title),
+            title: Text(circolare.title),
           ),
           body: Column(
             children: [
               Expanded(
                 child: ListView.builder(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
-                  itemCount: widget.circolare.fields.length,
-                  itemBuilder: (context, index) => widget.circolare.fields[index],
+                  itemCount: circolare.fields.length,
+                  itemBuilder: (context, index) => circolare.fields[index],
                 ),
               ),
               Container(

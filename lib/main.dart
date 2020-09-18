@@ -13,7 +13,32 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  List<Circolare> _circolari = [];
+  List<Circolare> _circolari = [
+    Circolare(
+      title: "CIRCOLARE",
+      fields: [
+        CircolareField<String>(
+          label: "STRING",
+          constraints: CircolareFieldConstraints(
+            minLength: 1,
+            maxLength: 10,
+          ),
+        ),
+        CircolareField<int>(
+          label: "INTEGER",
+          constraints: CircolareFieldConstraints(
+            min: 15,
+            max: 100,
+          ),
+          defaultValue: 42,
+        ),
+        CircolareField<bool>(
+          label: "BOOL",
+          defaultValue: true,
+        ),
+      ],
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -46,32 +71,7 @@ class _MyAppState extends State<MyApp> {
           child: Icon(Icons.add),
           tooltip: "Crea nuova circolare",
           onPressed: () {
-            setState(() {
-              _circolari.add(Circolare(
-                title: "CIRCOLARE",
-                fields: [
-                  CircolareField<String>(
-                    label: "STRING",
-                    constraints: CircolareFieldConstraints(
-                      minLength: 1,
-                      maxLength: 10,
-                    ),
-                  ),
-                  CircolareField<int>(
-                    label: "INTEGER",
-                    constraints: CircolareFieldConstraints(
-                      min: 15,
-                      max: 100,
-                    ),
-                    defaultValue: 42,
-                  ),
-                  CircolareField<bool>(
-                    label: "BOOL",
-                    defaultValue: true,
-                  ),
-                ],
-              ));
-            });
+            // TODO
           },
         ),
       ),
