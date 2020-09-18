@@ -65,9 +65,9 @@ class _CircolareFieldState<T> extends State<CircolareField<T>> {
             case String:
 
               if (value.length < widget.constraints.minLength)
-                _error = "MIN_LENGTH";
+                _error = "Il testo deve avere almeno ${widget.constraints.minLength} caratteri";
               else if (value.length > widget.constraints.maxLength)
-                _error = "MAX_LENGTH";
+                _error = "Il testo non deve superare i ${widget.constraints.maxLength} caratteri";
 
               break;
             case num:
@@ -76,13 +76,13 @@ class _CircolareFieldState<T> extends State<CircolareField<T>> {
               final num number = num.tryParse(value);
 
               if (number == null)
-                _error = "INVALID_NUM";
+                _error = "Il numero non è valido";
               else if (T == int && number.toInt() != number)
-                _error = "NUM_NO_INT";
+                _error = "Il numero deve essere intero";
               else if (number < widget.constraints.min)
-                _error = "MIN_NUM";
+                _error = "Il numero deve essere superiore o uguale a ${widget.constraints.min}";
               else if (number > widget.constraints.max)
-                _error = "MAX_NUM";
+                _error = "Il numero deve essere inferiore o uguale a ${widget.constraints.max}";
 
               break;
           }
