@@ -1,4 +1,5 @@
 import 'package:circolari_online/models/Circolare.dart';
+import 'package:circolari_online/widget/CircolareField.dart';
 import 'package:circolari_online/widget/CircolarePage.dart';
 import 'package:flutter/material.dart';
 
