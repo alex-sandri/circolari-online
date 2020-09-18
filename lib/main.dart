@@ -23,6 +23,7 @@ class _MyAppState extends State<MyApp> {
             minLength: 1,
             maxLength: 10,
           ),
+          isRequired: true,
         ),
         CircolareField<int>(
           label: "INTEGER",

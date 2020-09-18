@@ -47,6 +47,8 @@ class CircolareField<T> extends StatelessWidget {
       validator: (value) {
         String error;
 
+        if (value == "" && !isRequired) return error;
+
         if (constraints == null) return error;
 
         if (!(constraints.regex?.hasMatch(value) ?? true))
