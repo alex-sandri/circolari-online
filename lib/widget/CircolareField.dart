@@ -4,6 +4,8 @@ class CircolareField<T> extends StatefulWidget
 {
   final String label;
 
+  final bool isRequired;
+
   final CircolareFieldConstraints constraints;
 
   final T defaultValue;
@@ -12,6 +14,7 @@ class CircolareField<T> extends StatefulWidget
 
   CircolareField({
     @required this.label,
+    this.isRequired = false,
     this.constraints,
     this.defaultValue,
   })
