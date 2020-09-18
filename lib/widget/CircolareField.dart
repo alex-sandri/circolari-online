@@ -48,8 +48,11 @@ class _CircolareFieldState<T> extends State<CircolareField<T>> {
       keyboardType: [ num, int, double ].contains(T) ? TextInputType.number : TextInputType.text,
       decoration: InputDecoration(
         labelText: widget.label,
+        errorText: _error,
       ),
       onChanged: (value) {
+        _error = null;
+
         _value = value is T ? value as T : null;
 
         if (widget.constraints == null) return;
