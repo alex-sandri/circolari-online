@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CircolareField<T> extends StatefulWidget
-{
+class CircolareField<T> extends StatelessWidget {
   final String label;
 
   final bool isRequired;
@@ -9,8 +8,6 @@ class CircolareField<T> extends StatefulWidget
   final CircolareFieldConstraints constraints;
 
   final T defaultValue;
-
-  final TextEditingController controller = TextEditingController();
 
   CircolareField({
     @required this.label,
@@ -21,56 +18,48 @@ class CircolareField<T> extends StatefulWidget
   {
     if (!<Type>[ String, num, int, double, bool ].contains(T))
       throw ArgumentError("Only String, num, int, double and bool are supported types");
-
-    controller.text = defaultValue?.toString();
   }
-
-  @override
-  _CircolareFieldState<T> createState() => _CircolareFieldState<T>();
-}
-
-class _CircolareFieldState<T> extends State<CircolareField<T>> {
-  bool _checked;
-
-  String _error;
 
   @override
   Widget build(BuildContext context) {
     if (T == bool)
     {
-      _checked ??= widget.defaultValue as bool;
+      bool value = defaultValue ?? false;
 
-      return CheckboxListTile(
-        title: Text(widget.label),
-        value: _checked ?? false,
-        onChanged: (checked) =>
-          setState(() => _checked = checked),
+      return StatefulBuilder(
+        builder: (context, setState) {
+          return CheckboxListTile(
+            title: Text(label),
+            value: value,
+            onChanged: (checked) =>
+              setState(() => value = checked),
+          );
+        },
       );
     }
 
-    return TextField(
-      controller: widget.controller,
+    return TextFormField(
+      initialValue: defaultValue?.toString(),
       keyboardType: [ num, int, double ].contains(T) ? TextInputType.number : TextInputType.text,
       decoration: InputDecoration(
-        labelText: widget.label,
-        errorText: _error,
+        labelText: label,
       ),
-      onChanged: (value) {
-        _error = null;
+      validator: (value) {
+        String error;
 
-        if (widget.constraints == null) return;
+        if (constraints == null) return error;
 
-        if (!(widget.constraints.regex?.hasMatch(value) ?? true))
-          _error = "Il valore inserito non rispetta il formato previsto";
+        if (!(constraints.regex?.hasMatch(value) ?? true))
+          error = "Il valore inserito non rispetta il formato previsto";
         else
           switch (T)
           {
             case String:
 
-              if (value.length < widget.constraints.minLength)
-                _error = "Il testo deve avere almeno ${widget.constraints.minLength} caratteri";
-              else if (value.length > widget.constraints.maxLength)
-                _error = "Il testo non deve superare i ${widget.constraints.maxLength} caratteri";
+              if (value.length < constraints.minLength)
+                error = "Il testo deve avere almeno ${constraints.minLength} caratteri";
+              else if (value.length > constraints.maxLength)
+                error = "Il testo non deve superare i ${constraints.maxLength} caratteri";
 
               break;
             case num:
@@ -79,18 +68,18 @@ class _CircolareFieldState<T> extends State<CircolareField<T>> {
               final num number = num.tryParse(value);
 
               if (number == null)
-                _error = "Il numero non è valido";
+                error = "Il numero non è valido";
               else if (T == int && number.toInt() != number)
-                _error = "Il numero deve essere intero";
-              else if (number < widget.constraints.min)
-                _error = "Il numero deve essere superiore o uguale a ${widget.constraints.min}";
-              else if (number > widget.constraints.max)
-                _error = "Il numero deve essere inferiore o uguale a ${widget.constraints.max}";
+                error = "Il numero deve essere intero";
+              else if (number < constraints.min)
+                error = "Il numero deve essere superiore o uguale a ${constraints.min}";
+              else if (number > constraints.max)
+                error = "Il numero deve essere inferiore o uguale a ${constraints.max}";
 
               break;
           }
 
-          setState(() {});
+        return error;
       },
     );
   }
