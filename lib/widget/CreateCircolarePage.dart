@@ -53,7 +53,18 @@ class CreateCircolarePage extends StatelessWidget {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text("TEST"),
+                        DropdownButton<String>(
+                          hint: Text("Tipo"),
+                          items: [
+                            DropdownMenuItem(child: Text("Testo"), value: "string"),
+                            DropdownMenuItem(child: Text("Numero"), value: "num"),
+                            DropdownMenuItem(child: Text("Numero intero"), value: "int"),
+                            DropdownMenuItem(child: Text("Checkbox"), value: "bool"),
+                          ],
+                          onChanged: (type) {
+                            // TODO
+                          }
+                        ),
                       ],
                     ),
                   ),
