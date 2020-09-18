@@ -8,6 +8,8 @@ class CircolareField<T> extends StatefulWidget
 
   final T defaultValue;
 
+  final TextEditingController controller = TextEditingController();
+
   CircolareField({
     @required this.label,
     this.constraints,
@@ -16,6 +18,8 @@ class CircolareField<T> extends StatefulWidget
   {
     if (!<Type>[ String, num, int, double, bool ].contains(T))
       throw ArgumentError("Only String, num, int, double and bool are supported types");
+
+    controller.text = defaultValue?.toString();
   }
 
   @override
@@ -24,6 +28,8 @@ class CircolareField<T> extends StatefulWidget
 
 class _CircolareFieldState<T> extends State<CircolareField<T>> {
   T _value;
+
+  String _error;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +44,7 @@ class _CircolareFieldState<T> extends State<CircolareField<T>> {
       );
 
     return TextField(
-      controller: TextEditingController()..text = widget.defaultValue?.toString(),
+      controller: widget.controller,
       keyboardType: [ num, int, double ].contains(T) ? TextInputType.number : TextInputType.text,
       decoration: InputDecoration(
         labelText: widget.label,
@@ -48,19 +54,17 @@ class _CircolareFieldState<T> extends State<CircolareField<T>> {
 
         if (widget.constraints == null) return;
 
-        String error;
-
         if (!(widget.constraints.regex?.hasMatch(value) ?? true))
-          error = "REGEX_NO_MATCH";
+          _error = "REGEX_NO_MATCH";
         else
           switch (T)
           {
             case String:
 
               if (value.length < widget.constraints.minLength)
-                error = "MIN_LENGTH";
+                _error = "MIN_LENGTH";
               else if (value.length > widget.constraints.maxLength)
-                error = "MAX_LENGTH";
+                _error = "MAX_LENGTH";
 
               break;
             case num:
@@ -69,16 +73,18 @@ class _CircolareFieldState<T> extends State<CircolareField<T>> {
               final num number = num.tryParse(value);
 
               if (number == null)
-                error = "INVALID_NUM";
+                _error = "INVALID_NUM";
               else if (T == int && number.toInt() != number)
-                error = "NUM_NO_INT";
+                _error = "NUM_NO_INT";
               else if (number < widget.constraints.min)
-                error = "MIN_NUM";
+                _error = "MIN_NUM";
               else if (number > widget.constraints.max)
-                error = "MAX_NUM";
+                _error = "MAX_NUM";
 
               break;
           }
+
+          setState(() {});
       },
     );
   }
