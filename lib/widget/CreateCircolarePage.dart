@@ -17,27 +17,30 @@ class CreateCircolarePage extends StatelessWidget {
                 icon: Icon(Icons.add),
                 tooltip: "Aggiungi campo",
                 onPressed: () {
+                  String _type;
+
                   showDialog(
                     context: context,
-                    builder: (context) => Dialog(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            DropdownButton<String>(
-                              hint: Text("Tipo"),
-                              items: [
-                                DropdownMenuItem(child: Text("Testo"), value: "string"),
-                                DropdownMenuItem(child: Text("Numero"), value: "num"),
-                                DropdownMenuItem(child: Text("Numero intero"), value: "int"),
-                                DropdownMenuItem(child: Text("Checkbox"), value: "bool"),
-                              ],
-                              onChanged: (type) {
-                                // TODO
-                              }
-                            ),
-                          ],
+                    builder: (context) => StatefulBuilder(
+                      builder: (context, setState) => Dialog(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              DropdownButton<String>(
+                                hint: Text("Tipo"),
+                                value: _type,
+                                items: [
+                                  DropdownMenuItem(child: Text("Testo"), value: "string"),
+                                  DropdownMenuItem(child: Text("Numero"), value: "num"),
+                                  DropdownMenuItem(child: Text("Numero intero"), value: "int"),
+                                  DropdownMenuItem(child: Text("Checkbox"), value: "bool"),
+                                ],
+                                onChanged: (type) => setState(() => _type = type),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
