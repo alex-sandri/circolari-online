@@ -12,6 +12,39 @@ class CreateCircolarePage extends StatelessWidget {
         child: Scaffold(
           appBar: AppBar(
             title: Text("Crea nuova circolare"),
+            actions: [
+              IconButton(
+                icon: Icon(Icons.add),
+                tooltip: "Aggiungi campo",
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => Dialog(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            DropdownButton<String>(
+                              hint: Text("Tipo"),
+                              items: [
+                                DropdownMenuItem(child: Text("Testo"), value: "string"),
+                                DropdownMenuItem(child: Text("Numero"), value: "num"),
+                                DropdownMenuItem(child: Text("Numero intero"), value: "int"),
+                                DropdownMenuItem(child: Text("Checkbox"), value: "bool"),
+                              ],
+                              onChanged: (type) {
+                                // TODO
+                              }
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ],
           ),
           body: Column(
             children: [
@@ -40,37 +73,6 @@ class CreateCircolarePage extends StatelessWidget {
                 ),
               ),
             ],
-          ),
-          floatingActionButton: FloatingActionButton(
-            child: Icon(Icons.add),
-            tooltip: "Aggiungi campo",
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (context) => Dialog(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        DropdownButton<String>(
-                          hint: Text("Tipo"),
-                          items: [
-                            DropdownMenuItem(child: Text("Testo"), value: "string"),
-                            DropdownMenuItem(child: Text("Numero"), value: "num"),
-                            DropdownMenuItem(child: Text("Numero intero"), value: "int"),
-                            DropdownMenuItem(child: Text("Checkbox"), value: "bool"),
-                          ],
-                          onChanged: (type) {
-                            // TODO
-                          }
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              );
-            },
           ),
         ),
       ),
