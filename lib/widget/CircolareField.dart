@@ -16,8 +16,8 @@ class CircolareField<T> extends StatelessWidget {
     this.defaultValue,
   })
   {
-    if (!<Type>[ String, num, int, double, bool ].contains(T))
-      throw ArgumentError("Only String, num, int, double and bool are supported types");
+    if (!<Type>[ String, int, double, bool ].contains(T))
+      throw ArgumentError("Only String, int, double and bool are supported types");
   }
 
   @override
@@ -40,7 +40,7 @@ class CircolareField<T> extends StatelessWidget {
 
     return TextFormField(
       initialValue: defaultValue?.toString(),
-      keyboardType: [ num, int, double ].contains(T) ? TextInputType.number : TextInputType.text,
+      keyboardType: [ int, double ].contains(T) ? TextInputType.number : TextInputType.text,
       decoration: InputDecoration(
         labelText: label,
       ),
@@ -64,10 +64,9 @@ class CircolareField<T> extends StatelessWidget {
                 error = "Il testo non deve superare i ${constraints.maxLength} caratteri";
 
               break;
-            case num:
             case int:
             case double:
-              final num number = num.tryParse(value);
+              final double number = double.tryParse(value);
 
               if (number == null)
                 error = "Il numero non è valido";
@@ -94,8 +93,8 @@ class CircolareFieldConstraints
   final int minLength;
   final int maxLength;
 
-  final num min;
-  final num max;
+  final double min;
+  final double max;
 
   CircolareFieldConstraints({
     this.regex,
