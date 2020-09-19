@@ -31,6 +31,7 @@ class CreateCircolarePage extends StatelessWidget {
                               DropdownButton<String>(
                                 hint: Text("Tipo"),
                                 value: _type,
+                                isExpanded: true,
                                 items: [
                                   DropdownMenuItem(child: Text("Testo"), value: "string"),
                                   DropdownMenuItem(child: Text("Numero"), value: "double"),
@@ -39,6 +40,20 @@ class CreateCircolarePage extends StatelessWidget {
                                 ],
                                 onChanged: (type) => setState(() => _type = type),
                               ),
+                              
+                              if (_type != null)
+                                Container(
+                                  width: double.infinity,
+                                  child: FlatButton(
+                                    child: Text("Aggiungi"),
+                                    padding: const EdgeInsets.all(16),
+                                    color: Theme.of(context).accentColor,
+                                    colorBrightness: Theme.of(context).accentColorBrightness,
+                                    onPressed: () {
+                                      // TODO
+                                    },
+                                  ),
+                                ),
                             ],
                           ),
                         ),
