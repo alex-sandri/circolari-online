@@ -98,10 +98,7 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
           body: Column(
             children: [
               Expanded(
-                child: ReorderableListView(
-                  onReorder: (oldIndex, newIndex) {
-                    // TODO
-                  },
+                child: ListView(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   children: _fields.map((field) => field.build(context)).toList(),
                 ),
