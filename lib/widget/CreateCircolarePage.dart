@@ -106,9 +106,13 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
 
                     return Dismissible(
                       key: ValueKey(field),
-                      onDismissed: (direction) {
-                        // TODO
-                      },
+                      onDismissed: (direction) => setState(() => _fields.removeAt(index)),
+                      background: Container(
+                        color: Colors.red,
+                        child: Icon(
+                          Icons.delete,
+                        ),
+                      ),
                       child: field,
                     );
                   },
