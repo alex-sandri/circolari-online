@@ -27,7 +27,9 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
                   String _type;
                   String _label = "";
 
-                  String _stringDefaultValue = "";
+                  String _stringDefaultValue;
+                  double _doubleDefaultValue;
+                  int _intDefaultValue;
                   bool _checkboxDefaultValue = false;
 
                   showDialog(
@@ -60,11 +62,40 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
 
                               if (_type == "string")
                                 TextFormField(
-                                  initialValue: _stringDefaultValue,
                                   decoration: InputDecoration(
                                     labelText: "Valore predefinito",
                                   ),
                                   onChanged: (value) => setState(() => _stringDefaultValue = value),
+                                ),
+
+                              if (_type == "double")
+                                TextFormField(
+                                  keyboardType: TextInputType.number,
+                                  decoration: InputDecoration(
+                                    labelText: "Valore predefinito",
+                                  ),
+                                  onChanged: (value) {
+                                    final double parsedValue = double.tryParse(value);
+
+                                    if (parsedValue == null) return;
+
+                                    setState(() => _doubleDefaultValue = parsedValue);
+                                  },
+                                ),
+
+                              if (_type == "int")
+                                TextFormField(
+                                  keyboardType: TextInputType.number,
+                                  decoration: InputDecoration(
+                                    labelText: "Valore predefinito",
+                                  ),
+                                  onChanged: (value) {
+                                    final int parsedValue = int.tryParse(value);
+
+                                    if (parsedValue == null) return;
+
+                                    setState(() => _intDefaultValue = parsedValue);
+                                  },
                                 ),
 
                               if (_type == "bool")
@@ -97,11 +128,13 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
                                           case "double":
                                             _fields.add(CircolareField<double>(
                                               label: _label,
+                                              defaultValue: _doubleDefaultValue,
                                             ));
                                             break;
                                           case "int":
                                             _fields.add(CircolareField<int>(
                                               label: _label,
+                                              defaultValue: _intDefaultValue,
                                             ));
                                             break;
                                           case "bool":
