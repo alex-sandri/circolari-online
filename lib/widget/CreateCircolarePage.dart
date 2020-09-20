@@ -9,6 +9,8 @@ class CreateCircolarePage extends StatefulWidget {
 class _CreateCircolarePageState extends State<CreateCircolarePage> {
   final List<CircolareField> _fields = [];
 
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -98,24 +100,28 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
           body: Column(
             children: [
               Expanded(
-                child: ListView.builder(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  itemCount: _fields.length,
-                  itemBuilder: (context, index) {
-                    final CircolareField field = _fields[index];
+                child: Form(
+                  key: _formKey,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  child: ListView.builder(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    itemCount: _fields.length,
+                    itemBuilder: (context, index) {
+                      final CircolareField field = _fields[index];
 
-                    return Dismissible(
-                      key: ValueKey(field),
-                      onDismissed: (direction) => setState(() => _fields.removeAt(index)),
-                      background: Container(
-                        color: Colors.red,
-                        child: Icon(
-                          Icons.delete,
+                      return Dismissible(
+                        key: ValueKey(field),
+                        onDismissed: (direction) => setState(() => _fields.removeAt(index)),
+                        background: Container(
+                          color: Colors.red,
+                          child: Icon(
+                            Icons.delete,
+                          ),
                         ),
-                      ),
-                      child: field,
-                    );
-                  },
+                        child: field,
+                      );
+                    },
+                  ),
                 ),
               ),
               Container(
@@ -130,7 +136,7 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
                   color: Theme.of(context).accentColor,
                   colorBrightness: Theme.of(context).accentColorBrightness,
                   onPressed: () {
-                    // TODO
+                    print(_formKey.currentState.validate());
                   },
                 ),
               ),
