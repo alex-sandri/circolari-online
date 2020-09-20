@@ -27,6 +27,7 @@ class CircolareField<T> extends StatelessWidget {
       bool value = defaultValue ?? false;
 
       return StatefulBuilder(
+        key: ValueKey(this),
         builder: (context, setState) {
           return CheckboxListTile(
             title: Text(label),
@@ -39,6 +40,7 @@ class CircolareField<T> extends StatelessWidget {
     }
 
     return TextFormField(
+      key: ValueKey(this),
       initialValue: defaultValue?.toString(),
       keyboardType: [ int, double ].contains(T) ? TextInputType.number : TextInputType.text,
       decoration: InputDecoration(

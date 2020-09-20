@@ -102,7 +102,7 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
                   onReorder: (oldIndex, newIndex) {
                     // TODO
                   },
-                  children: _fields,
+                  children: _fields.map((field) => field.build(context)).toList(),
                 ),
               ),
               Container(
