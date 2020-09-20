@@ -27,6 +27,7 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
                   String _type;
                   String _label = "";
 
+                  String _stringDefaultValue = "";
                   bool _checkboxDefaultValue = false;
 
                   showDialog(
@@ -57,6 +58,15 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
                                 onChanged: (value) => setState(() => _label = value),
                               ),
 
+                              if (_type == "string")
+                                TextFormField(
+                                  initialValue: _stringDefaultValue,
+                                  decoration: InputDecoration(
+                                    labelText: "Valore predefinito",
+                                  ),
+                                  onChanged: (value) => setState(() => _stringDefaultValue = value),
+                                ),
+
                               if (_type == "bool")
                                 CheckboxListTile(
                                   title: Text("Valore predefinito"),
@@ -81,6 +91,7 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
                                           case "string":
                                             _fields.add(CircolareField<String>(
                                               label: _label,
+                                              defaultValue: _stringDefaultValue,
                                             ));
                                             break;
                                           case "double":
