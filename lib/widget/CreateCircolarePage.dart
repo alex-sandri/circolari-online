@@ -55,7 +55,7 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
                                     color: Theme.of(context).accentColor,
                                     colorBrightness: Theme.of(context).accentColorBrightness,
                                     onPressed: () {
-                                      setState(() {
+                                      this.setState(() {
                                         switch (_type)
                                         {
                                           case "string":
