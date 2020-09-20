@@ -98,9 +98,20 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
           body: Column(
             children: [
               Expanded(
-                child: ListView(
+                child: ListView.builder(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
-                  children: _fields.map((field) => field.build(context)).toList(),
+                  itemCount: _fields.length,
+                  itemBuilder: (context, index) {
+                    final CircolareField field = _fields[index];
+
+                    return Dismissible(
+                      key: ValueKey(field),
+                      onDismissed: (direction) {
+                        // TODO
+                      },
+                      child: field,
+                    );
+                  },
                 ),
               ),
               Container(
