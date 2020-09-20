@@ -49,36 +49,41 @@ class CircolareField<T> extends StatelessWidget {
 
         if (value.isEmpty && !isRequired) return error;
 
-        if (constraints == null) return error;
+        switch (T)
+        {
+          case String:
 
-        if (!(constraints.regex?.hasMatch(value) ?? true))
-          error = "Il valore inserito non rispetta il formato previsto";
-        else
-          switch (T)
-          {
-            case String:
-
-              if (value.length < constraints.minLength)
+            if (constraints != null)
+            {
+              if (value.length < constraints?.minLength)
                 error = "Il testo deve avere almeno ${constraints.minLength} caratteri";
               else if (value.length > constraints.maxLength)
                 error = "Il testo non deve superare i ${constraints.maxLength} caratteri";
+            }
 
-              break;
-            case int:
-            case double:
-              final double number = double.tryParse(value);
+            break;
+          case int:
+          case double:
+            final double number = double.tryParse(value);
 
-              if (number == null)
-                error = "Il numero non è valido";
-              else if (T == int && number.toInt() != number)
-                error = "Il numero deve essere intero";
-              else if (number < constraints.min)
+            if (number == null)
+              error = "Il numero non è valido";
+            else if (T == int && number.toInt() != number)
+              error = "Il numero deve essere intero";
+
+            if (constraints != null)
+            {
+              if (number < constraints.min)
                 error = "Il numero deve essere superiore o uguale a ${constraints.min}";
               else if (number > constraints.max)
                 error = "Il numero deve essere inferiore o uguale a ${constraints.max}";
+            }
 
-              break;
-          }
+            break;
+        }
+
+        if (!(constraints?.regex?.hasMatch(value) ?? true))
+          error = "Il valore inserito non rispetta il formato previsto";
 
         return error;
       },
