@@ -24,7 +24,11 @@ class CircolarePage extends StatelessWidget {
                   key: _formKey,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   child: ListView.builder(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    padding: const EdgeInsets.only(
+                      left: 8,
+                      right: 8,
+                      bottom: 8,
+                    ),
                     itemCount: circolare.fields.length,
                     itemBuilder: (context, index) => circolare.fields[index],
                   ),
