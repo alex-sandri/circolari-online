@@ -1,8 +1,13 @@
 import 'package:circolari_online/widget/CircolareField.dart';
 import 'package:flutter/material.dart';
 
-class CreateCircolarePage extends StatelessWidget {
-  final List<CircolareField> fields = [];
+class CreateCircolarePage extends StatefulWidget {
+  @override
+  _CreateCircolarePageState createState() => _CreateCircolarePageState();
+}
+
+class _CreateCircolarePageState extends State<CreateCircolarePage> {
+  final List<CircolareField> _fields = [];
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +55,33 @@ class CreateCircolarePage extends StatelessWidget {
                                     color: Theme.of(context).accentColor,
                                     colorBrightness: Theme.of(context).accentColorBrightness,
                                     onPressed: () {
-                                      // TODO
+                                      setState(() {
+                                        switch (_type)
+                                        {
+                                          case "string":
+                                            _fields.add(CircolareField<String>(
+                                              label: "TODO",
+                                            ));
+                                            break;
+                                          case "doouble":
+                                            _fields.add(CircolareField<double>(
+                                              label: "TODO",
+                                            ));
+                                            break;
+                                          case "int":
+                                            _fields.add(CircolareField<int>(
+                                              label: "TODO",
+                                            ));
+                                            break;
+                                          case "bool":
+                                            _fields.add(CircolareField<bool>(
+                                              label: "TODO",
+                                            ));
+                                            break;
+                                        }
+                                      });
+
+                                      Navigator.of(context).pop();
                                     },
                                   ),
                                 ),
@@ -71,7 +102,7 @@ class CreateCircolarePage extends StatelessWidget {
                   onReorder: (oldIndex, newIndex) {
                     // TODO
                   },
-                  children: fields,
+                  children: _fields,
                 ),
               ),
               Container(
