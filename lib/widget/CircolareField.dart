@@ -49,6 +49,8 @@ class CircolareField<T> extends StatelessWidget {
 
         if (value.isEmpty && !isRequired) return error;
 
+        if (value.isEmpty && isRequired) return "Questo campo è obbligatorio";
+
         switch (T)
         {
           case String:
