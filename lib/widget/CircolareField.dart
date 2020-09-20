@@ -64,7 +64,7 @@ class CircolareField<T> extends StatelessWidget {
             break;
           case int:
           case double:
-            final double number = double.tryParse(value);
+            final num number = num.tryParse(value);
 
             if (number == null)
               error = "Il numero non è valido";
