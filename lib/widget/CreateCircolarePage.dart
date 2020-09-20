@@ -26,6 +26,7 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
                 onPressed: () {
                   String _type;
                   String _label = "";
+                  bool _isRequired = false;
 
                   String _stringDefaultValue;
                   double _doubleDefaultValue;
@@ -58,6 +59,12 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
                                   labelText: "Etichetta",
                                 ),
                                 onChanged: (value) => setState(() => _label = value),
+                              ),
+                              CheckboxListTile(
+                                title: Text("Campo obbligatorio"),
+                                value: _isRequired,
+                                onChanged: (checked) =>
+                                  setState(() => _isRequired = checked),
                               ),
 
                               if (_type == "string")
@@ -123,24 +130,28 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
                                             _fields.add(CircolareField<String>(
                                               label: _label,
                                               defaultValue: _stringDefaultValue,
+                                              isRequired: _isRequired,
                                             ));
                                             break;
                                           case "double":
                                             _fields.add(CircolareField<double>(
                                               label: _label,
                                               defaultValue: _doubleDefaultValue,
+                                              isRequired: _isRequired,
                                             ));
                                             break;
                                           case "int":
                                             _fields.add(CircolareField<int>(
                                               label: _label,
                                               defaultValue: _intDefaultValue,
+                                              isRequired: _isRequired,
                                             ));
                                             break;
                                           case "bool":
                                             _fields.add(CircolareField<bool>(
                                               label: _label,
                                               defaultValue: _checkboxDefaultValue,
+                                              isRequired: _isRequired,
                                             ));
                                             break;
                                         }
