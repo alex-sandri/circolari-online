@@ -58,6 +58,7 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
                               if (_type != null && _label.isNotEmpty)
                                 Container(
                                   width: double.infinity,
+                                  padding: const EdgeInsets.only(top: 8),
                                   child: FlatButton(
                                     child: Text("Aggiungi"),
                                     padding: const EdgeInsets.all(16),
