@@ -25,6 +25,7 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
                 tooltip: "Aggiungi campo",
                 onPressed: () {
                   String _type;
+                  String _label = "";
 
                   showDialog(
                     context: context,
@@ -47,8 +48,14 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
                                 ],
                                 onChanged: (type) => setState(() => _type = type),
                               ),
+                              TextFormField(
+                                decoration: InputDecoration(
+                                  labelText: "Etichetta",
+                                ),
+                                onChanged: (value) => setState(() => _label = value),
+                              ),
                               
-                              if (_type != null)
+                              if (_type != null && _label.isNotEmpty)
                                 Container(
                                   width: double.infinity,
                                   child: FlatButton(
@@ -62,22 +69,22 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
                                         {
                                           case "string":
                                             _fields.add(CircolareField<String>(
-                                              label: "TODO",
+                                              label: _label,
                                             ));
                                             break;
                                           case "double":
                                             _fields.add(CircolareField<double>(
-                                              label: "TODO",
+                                              label: _label,
                                             ));
                                             break;
                                           case "int":
                                             _fields.add(CircolareField<int>(
-                                              label: "TODO",
+                                              label: _label,
                                             ));
                                             break;
                                           case "bool":
                                             _fields.add(CircolareField<bool>(
-                                              label: "TODO",
+                                              label: _label,
                                             ));
                                             break;
                                         }
