@@ -98,8 +98,8 @@ class CircolareFieldConstraints
   final int minLength;
   final int maxLength;
 
-  final double min;
-  final double max;
+  final num min;
+  final num max;
 
   CircolareFieldConstraints({
     this.regex,
