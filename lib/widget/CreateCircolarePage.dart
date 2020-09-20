@@ -63,7 +63,7 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
                                               label: "TODO",
                                             ));
                                             break;
-                                          case "doouble":
+                                          case "double":
                                             _fields.add(CircolareField<double>(
                                               label: "TODO",
                                             ));
