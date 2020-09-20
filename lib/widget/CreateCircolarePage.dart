@@ -102,6 +102,7 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
                   onReorder: (oldIndex, newIndex) {
                     // TODO
                   },
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
                   children: _fields.map((field) => field.build(context)).toList(),
                 ),
               ),
