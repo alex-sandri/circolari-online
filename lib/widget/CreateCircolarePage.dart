@@ -11,8 +11,6 @@ class CreateCircolarePage extends StatefulWidget {
 class _CreateCircolarePageState extends State<CreateCircolarePage> {
   final List<CircolareField> _fields = [];
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -153,32 +151,28 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
           body: Column(
             children: [
               Expanded(
-                child: Form(
-                  key: _formKey,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  child: ListView.builder(
-                    padding: const EdgeInsets.only(
-                      left: 8,
-                      right: 8,
-                      bottom: 8,
-                    ),
-                    itemCount: _fields.length,
-                    itemBuilder: (context, index) {
-                      final CircolareField field = _fields[index];
-
-                      return Dismissible(
-                        key: ValueKey(field),
-                        onDismissed: (direction) => setState(() => _fields.removeAt(index)),
-                        background: Container(
-                          color: Colors.red,
-                          child: Icon(
-                            Icons.delete,
-                          ),
-                        ),
-                        child: field,
-                      );
-                    },
+                child: ListView.builder(
+                  padding: const EdgeInsets.only(
+                    left: 8,
+                    right: 8,
+                    bottom: 8,
                   ),
+                  itemCount: _fields.length,
+                  itemBuilder: (context, index) {
+                    final CircolareField field = _fields[index];
+
+                    return Dismissible(
+                      key: ValueKey(field),
+                      onDismissed: (direction) => setState(() => _fields.removeAt(index)),
+                      background: Container(
+                        color: Colors.red,
+                        child: Icon(
+                          Icons.delete,
+                        ),
+                      ),
+                      child: field,
+                    );
+                  },
                 ),
               ),
               Container(
