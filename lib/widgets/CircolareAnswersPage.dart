@@ -21,7 +21,9 @@ class CircolareAnswersPage extends StatelessWidget {
           body: StreamBuilder<QuerySnapshot>(
             stream: db.collection("circolari/${circolare.id}/answers").snapshots(),
             builder: (context, snapshot) {
-              if (!snapshot.hasData || snapshot.data.docs.isEmpty)
+              if (!snapshot.hasData) return LinearProgressIndicator();
+
+              if (snapshot.data.docs.isEmpty)
                 return Center(
                   child: Text("Non sono presenti risposte"),
                 );
