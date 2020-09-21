@@ -193,17 +193,16 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
                   color: Theme.of(context).accentColor,
                   colorBrightness: Theme.of(context).accentColorBrightness,
                   onPressed: () async {
-                    if (_formKey.currentState.validate())
-                    {
-                      final FirebaseFirestore db = FirebaseFirestore.instance;
+                    if (_fields.isEmpty) return;
 
-                      await db.collection("circolari").add(Circolare(
-                        title: "TODO",
-                        fields: _fields,
-                      ).toFirestore());
+                    final FirebaseFirestore db = FirebaseFirestore.instance;
 
-                      Navigator.of(context).pop();
-                    }
+                    await db.collection("circolari").add(Circolare(
+                      title: "TODO",
+                      fields: _fields,
+                    ).toFirestore());
+
+                    Navigator.of(context).pop();
                   },
                 ),
               ),
