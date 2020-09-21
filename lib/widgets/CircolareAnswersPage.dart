@@ -28,7 +28,7 @@ class CircolareAnswersPage extends StatelessWidget {
                     child: Dialog(
                       backgroundColor: Colors.white,
                       child: QrImage(
-                        data: "TODO",
+                        data: circolare.toString(),
                         version: QrVersions.auto,
                       ),
                     ),

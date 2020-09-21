@@ -37,4 +37,15 @@ class Circolare
         defaultValue: field["defaultValue"],
       )).toList(),
     );
+
+  @override
+  String toString() => id;
+
+  static Future<Circolare> fromString(String string) async {
+    final FirebaseFirestore db = FirebaseFirestore.instance;
+
+    final DocumentSnapshot document = await db.collection("circolari").doc(string).get();
+
+    return Circolare.fromFirestore(document);
+  }
 }
