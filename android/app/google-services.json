@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "714568047246",
+    "firebase_url": "https://circolari-online.firebaseio.com",
+    "project_id": "circolari-online",
+    "storage_bucket": "circolari-online.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:714568047246:android:dd00423b07a856c901c7df",
+        "android_client_info": {
+          "package_name": "com.example.circolari_online"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "714568047246-n6r7hjsi1chlrjm735iracjkrrm3bers.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9ZG5rXPRpSUqbUZkpIoPqD4jHrW9zrpo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "714568047246-n6r7hjsi1chlrjm735iracjkrrm3bers.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
