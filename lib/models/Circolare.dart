@@ -13,14 +13,22 @@ class Circolare
     @required this.fields,
   });
 
-  static Circolare fromFirestore(QueryDocumentSnapshot document) {
-    return Circolare(
+  Map<String, dynamic> toFirestore() => {
+    "title": title,
+    "fields": fields.map((field) => {
+      "label": field.label,
+      "isRequired": field.isRequired,
+      "defaultValue": field.defaultValue,
+    }).toList(),
+  };
+
+  static Circolare fromFirestore(QueryDocumentSnapshot document) =>
+    Circolare(
       title: document.data()["title"],
       fields: (document.data()["fields"] as List).map((field) => CircolareField(
         label: field["label"],
         isRequired: field["isRequired"],
         defaultValue: field["defaultValue"],
-      )),
+      )).toList(),
     );
-  }
 }

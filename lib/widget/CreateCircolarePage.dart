@@ -1,4 +1,6 @@
+import 'package:circolari_online/models/Circolare.dart';
 import 'package:circolari_online/widget/CircolareField.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class CreateCircolarePage extends StatefulWidget {
@@ -213,8 +215,18 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
                   padding: const EdgeInsets.all(16),
                   color: Theme.of(context).accentColor,
                   colorBrightness: Theme.of(context).accentColorBrightness,
-                  onPressed: () {
-                    print(_formKey.currentState.validate());
+                  onPressed: () async {
+                    if (_formKey.currentState.validate())
+                    {
+                      final FirebaseFirestore db = FirebaseFirestore.instance;
+
+                      await db.collection("circolari").add(Circolare(
+                        title: "TODO",
+                        fields: _fields,
+                      ).toFirestore());
+
+                      Navigator.of(context).pop();
+                    }
                   },
                 ),
               ),
