@@ -30,10 +30,12 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
                   String _label = "";
                   bool _isRequired = false;
 
-                  String _stringDefaultValue;
-                  double _doubleDefaultValue;
-                  int _intDefaultValue;
-                  bool _checkboxDefaultValue = false;
+                  Map<String, dynamic> _defaultValues = {
+                    "string": null,
+                    "double": null,
+                    "int": null,
+                    "bool": false,
+                  };
 
                   showDialog(
                     context: context,
@@ -74,7 +76,7 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
                                   decoration: InputDecoration(
                                     labelText: "Valore predefinito",
                                   ),
-                                  onChanged: (value) => setState(() => _stringDefaultValue = value),
+                                  onChanged: (value) => setState(() => _defaultValues[_type] = value),
                                 ),
 
                               if (_type == "double")
@@ -88,7 +90,7 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
 
                                     if (parsedValue == null) return;
 
-                                    setState(() => _doubleDefaultValue = parsedValue);
+                                    setState(() => _defaultValues[_type] = parsedValue);
                                   },
                                 ),
 
@@ -103,16 +105,16 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
 
                                     if (parsedValue == null) return;
 
-                                    setState(() => _intDefaultValue = parsedValue);
+                                    setState(() => _defaultValues[_type] = parsedValue);
                                   },
                                 ),
 
                               if (_type == "bool")
                                 CheckboxListTile(
                                   title: Text("Valore predefinito"),
-                                  value: _checkboxDefaultValue,
+                                  value: _defaultValues[_type],
                                   onChanged: (checked) =>
-                                    setState(() => _checkboxDefaultValue = checked),
+                                    setState(() => _defaultValues[_type] = checked),
                                 ),
                               
                               if (_type != null && _label.isNotEmpty)
@@ -129,7 +131,7 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
                                         _fields.add(CircolareField(
                                           type: _type,
                                           label: _label,
-                                          defaultValue: _checkboxDefaultValue,
+                                          defaultValue: _defaultValues[_type],
                                           isRequired: _isRequired,
                                         ));
                                       });

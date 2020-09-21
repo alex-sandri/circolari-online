@@ -18,7 +18,7 @@ class CircolareField extends StatelessWidget {
     this.constraints,
     this.defaultValue,
   }): assert([ "string", "int", "double", "bool" ].contains(type)),
-      assert(defaultValue.runtimeType == type);
+      assert(defaultValue.runtimeType.toString().toLowerCase() == type);
 
   @override
   Widget build(BuildContext context) {
