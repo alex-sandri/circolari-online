@@ -1,16 +1,21 @@
 import 'package:circolari_online/models/Circolare.dart';
 import 'package:circolari_online/widget/CircolarePage.dart';
 import 'package:circolari_online/widget/CreateCircolarePage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
-  runApp(MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp();
+
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  final FirebaseFirestore db = FirebaseFirestore.instance;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -21,19 +26,19 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           title: Text("Circolari Online"),
         ),
-        body: StreamBuilder<List<Circolare>>(
-          stream: null,
+        body: StreamBuilder<QuerySnapshot>(
+          stream: db.collection("circolari").snapshots(),
           builder: (context, snapshot) {
-            if (!snapshot.hasData)
+            if (snapshot.data.docs.isEmpty)
               return Center(
                 child: Text("Non sono presenti circolari"),
               );
 
             return ListView.separated(
               separatorBuilder: (context, index) => Divider(),
-              itemCount: snapshot.data.length,
+              itemCount: snapshot.data.size,
               itemBuilder: (context, index) {
-                final Circolare circolare = snapshot.data[index];
+                final Circolare circolare = Circolare.fromFirestore(snapshot.data.docs[index]);
 
                 return ListTile(
                   title: Text(circolare.title),
