@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
 
-class CircolareField<T> extends StatelessWidget {
+class CircolareField extends StatelessWidget {
+  final String type;
+
   final String label;
 
   final bool isRequired;
 
   final CircolareFieldConstraints constraints;
 
-  final T defaultValue;
+  final dynamic defaultValue;
 
   CircolareField({
+    @required this.type,
     @required this.label,
     this.isRequired = false,
     this.constraints,
     this.defaultValue,
-  })
-  {
-    if (!<Type>[ String, int, double, bool ].contains(T))
-      throw ArgumentError("Only String, int, double and bool are supported types");
-  }
+  }): assert([ "string", "int", "double", "bool" ].contains(type)),
+      assert(defaultValue.runtimeType == type);
 
   @override
   Widget build(BuildContext context) {
-    if (T == bool)
+    if (type == "bool")
     {
       bool value = defaultValue ?? false;
 
@@ -40,7 +40,7 @@ class CircolareField<T> extends StatelessWidget {
 
     return TextFormField(
       initialValue: defaultValue?.toString(),
-      keyboardType: [ int, double ].contains(T) ? TextInputType.number : TextInputType.text,
+      keyboardType: [ "int", "double" ].contains(type) ? TextInputType.number : TextInputType.text,
       decoration: InputDecoration(
         labelText: label,
       ),
@@ -51,9 +51,9 @@ class CircolareField<T> extends StatelessWidget {
 
         if (value.isEmpty && isRequired) return "Questo campo è obbligatorio";
 
-        switch (T)
+        switch (type)
         {
-          case String:
+          case "string":
 
             if (constraints != null)
             {
@@ -64,13 +64,13 @@ class CircolareField<T> extends StatelessWidget {
             }
 
             break;
-          case int:
-          case double:
+          case "int":
+          case "double":
             final num number = num.tryParse(value);
 
             if (number == null)
               error = "Il numero non è valido";
-            else if (T == int && number.toInt() != number)
+            else if (type == "int" && number.toInt() != number)
               error = "Il numero deve essere intero";
 
             if (constraints != null)

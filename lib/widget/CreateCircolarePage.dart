@@ -126,37 +126,12 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
                                     colorBrightness: Theme.of(context).accentColorBrightness,
                                     onPressed: () {
                                       this.setState(() {
-                                        switch (_type)
-                                        {
-                                          case "string":
-                                            _fields.add(CircolareField<String>(
-                                              label: _label,
-                                              defaultValue: _stringDefaultValue,
-                                              isRequired: _isRequired,
-                                            ));
-                                            break;
-                                          case "double":
-                                            _fields.add(CircolareField<double>(
-                                              label: _label,
-                                              defaultValue: _doubleDefaultValue,
-                                              isRequired: _isRequired,
-                                            ));
-                                            break;
-                                          case "int":
-                                            _fields.add(CircolareField<int>(
-                                              label: _label,
-                                              defaultValue: _intDefaultValue,
-                                              isRequired: _isRequired,
-                                            ));
-                                            break;
-                                          case "bool":
-                                            _fields.add(CircolareField<bool>(
-                                              label: _label,
-                                              defaultValue: _checkboxDefaultValue,
-                                              isRequired: _isRequired,
-                                            ));
-                                            break;
-                                        }
+                                        _fields.add(CircolareField(
+                                          type: _type,
+                                          label: _label,
+                                          defaultValue: _checkboxDefaultValue,
+                                          isRequired: _isRequired,
+                                        ));
                                       });
 
                                       Navigator.of(context).pop();
