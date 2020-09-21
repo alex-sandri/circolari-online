@@ -1,6 +1,6 @@
 import 'package:circolari_online/models/Circolare.dart';
-import 'package:circolari_online/widget/CircolarePage.dart';
-import 'package:circolari_online/widget/CreateCircolarePage.dart';
+import 'package:circolari_online/widgets/CircolareAnswersPage.dart';
+import 'package:circolari_online/widgets/CreateCircolarePage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
                   onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => CircolarePage(circolare)
+                      builder: (context) => CircolareAnswersPage(circolare)
                     ),
                   ),
                 );
