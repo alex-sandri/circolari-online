@@ -11,6 +11,8 @@ class CreateCircolarePage extends StatefulWidget {
 class _CreateCircolarePageState extends State<CreateCircolarePage> {
   final List<CircolareField> _fields = [];
 
+  final TextEditingController _titleController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -150,6 +152,16 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
           ),
           body: Column(
             children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: TextField(
+                  controller: _titleController,
+                  decoration: InputDecoration(
+                    labelText: "Titolo",
+                  ),
+                ),
+              ),
+              Divider(),
               Expanded(
                 child: ListView.builder(
                   padding: const EdgeInsets.only(
@@ -187,12 +199,12 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
                   color: Theme.of(context).accentColor,
                   colorBrightness: Theme.of(context).accentColorBrightness,
                   onPressed: () async {
-                    if (_fields.isEmpty) return;
+                    if (_fields.isEmpty || _titleController.text.isEmpty) return;
 
                     final FirebaseFirestore db = FirebaseFirestore.instance;
 
                     await db.collection("circolari").add(Circolare(
-                      title: "TODO",
+                      title: _titleController.text,
                       fields: _fields,
                     ).toFirestore());
 
