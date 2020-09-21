@@ -27,14 +27,12 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           title: Text("Circolari Online"),
           actions: [
-            Builder(
-              builder: (context) => IconButton(
-                icon: Icon(Icons.qr_code),
-                tooltip: "Compila circolare",
-                onPressed: () {
-                  // TODO
-                },
-              ),
+            IconButton(
+              icon: Icon(Icons.qr_code),
+              tooltip: "Compila circolare",
+              onPressed: () {
+                // TODO
+              },
             ),
           ],
         ),
