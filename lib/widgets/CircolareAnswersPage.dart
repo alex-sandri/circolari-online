@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 class CircolareAnswersPage extends StatelessWidget {
   final Circolare circolare;
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
   CircolareAnswersPage(this.circolare);
+
+  final FirebaseFirestore db = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -18,52 +18,23 @@ class CircolareAnswersPage extends StatelessWidget {
           appBar: AppBar(
             title: Text("Risposte: " + circolare.title),
           ),
-          body: Column(
-            children: [
-              Expanded(
-                child: Form(
-                  key: _formKey,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  child: ListView.builder(
-                    padding: const EdgeInsets.only(
-                      left: 8,
-                      right: 8,
-                      bottom: 8,
-                    ),
-                    itemCount: circolare.fields.length,
-                    itemBuilder: (context, index) => circolare.fields[index],
-                  ),
-                ),
-              ),
-              Container(
-                width: double.infinity,
-                child: FlatButton(
-                  child: Text("Invia"),
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.zero,
-                  ),
-                  padding: const EdgeInsets.all(16),
-                  color: Theme.of(context).accentColor,
-                  colorBrightness: Theme.of(context).accentColorBrightness,
-                  onPressed: () async {
-                    if (_formKey.currentState.validate())
-                    {
-                      final FirebaseFirestore db = FirebaseFirestore.instance;
+          body: StreamBuilder<QuerySnapshot>(
+            stream: db.collection("circolari/${circolare.id}/answers").snapshots(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData || snapshot.data.docs.isEmpty)
+                return Center(
+                  child: Text("Non sono presenti risposte"),
+                );
 
-                      final Map<String, dynamic> answer = {};
-
-                      circolare.fields.forEach((field) => answer[field.label] = field.value);
-
-                      await db.collection("circolari/${circolare.id}/answers").add(answer);
-
-                      Navigator.of(context).pop();
-                    }
-                  },
-                ),
-              ),
-            ],
-          ),
+              return ListView.separated(
+                separatorBuilder: (context, index) => Divider(),
+                itemCount: snapshot.data.size,
+                itemBuilder: (context, index) {
+                  return ListTile();
+                },
+              );
+            }
+          )
         ),
       ),
     );
