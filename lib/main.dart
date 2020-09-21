@@ -4,6 +4,7 @@ import 'package:circolari_online/widgets/CreateCircolarePage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,6 +26,17 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           title: Text("Circolari Online"),
+          actions: [
+            Builder(
+              builder: (context) => IconButton(
+                icon: Icon(Icons.qr_code),
+                tooltip: "Compila circolare",
+                onPressed: () {
+                  // TODO
+                },
+              ),
+            ),
+          ],
         ),
         body: StreamBuilder<QuerySnapshot>(
           stream: db.collection("circolari").snapshots(),
@@ -64,6 +76,14 @@ class MyApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale("it", "IT"),
+      ],
     );
   }
 }
