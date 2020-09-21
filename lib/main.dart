@@ -8,40 +8,7 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatefulWidget {
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  List<Circolare> _circolari = [
-    Circolare(
-      title: "CIRCOLARE",
-      fields: [
-        CircolareField<String>(
-          label: "STRING",
-          constraints: CircolareFieldConstraints(
-            minLength: 1,
-            maxLength: 10,
-          ),
-          isRequired: true,
-        ),
-        CircolareField<int>(
-          label: "INTEGER",
-          constraints: CircolareFieldConstraints(
-            min: 15,
-            max: 100,
-          ),
-          defaultValue: 42,
-        ),
-        CircolareField<bool>(
-          label: "BOOL",
-          defaultValue: true,
-        ),
-      ],
-    ),
-  ];
-
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -52,22 +19,32 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: Text("Circolari Online"),
         ),
-        body: ListView.separated(
-          separatorBuilder: (context, index) => Divider(),
-          itemCount: _circolari.length,
-          itemBuilder: (context, index) {
-            final Circolare circolare = _circolari[index];
+        body: StreamBuilder<List<Circolare>>(
+          stream: null,
+          builder: (context, snapshot) {
+            if (!snapshot.hasData)
+              return Center(
+                child: Text("Non sono presenti circolari"),
+              );
 
-            return ListTile(
-              title: Text(circolare.title),
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => CircolarePage(circolare)
-                ),
-              ),
+            return ListView.separated(
+              separatorBuilder: (context, index) => Divider(),
+              itemCount: snapshot.data.length,
+              itemBuilder: (context, index) {
+                final Circolare circolare = snapshot.data[index];
+
+                return ListTile(
+                  title: Text(circolare.title),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CircolarePage(circolare)
+                    ),
+                  ),
+                );
+              },
             );
-          },
+          }
         ),
         floatingActionButton: Builder(
           builder: (context) => FloatingActionButton(
