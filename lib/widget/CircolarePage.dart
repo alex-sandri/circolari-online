@@ -1,4 +1,5 @@
 import 'package:circolari_online/models/Circolare.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class CircolarePage extends StatelessWidget {
@@ -45,8 +46,19 @@ class CircolarePage extends StatelessWidget {
                   padding: const EdgeInsets.all(16),
                   color: Theme.of(context).accentColor,
                   colorBrightness: Theme.of(context).accentColorBrightness,
-                  onPressed: () {
-                    print(_formKey.currentState.validate());
+                  onPressed: () async {
+                    if (_formKey.currentState.validate())
+                    {
+                      final FirebaseFirestore db = FirebaseFirestore.instance;
+
+                      final Map<String, dynamic> answer = {};
+
+                      circolare.fields.forEach((field) => answer[field.label] = field.value);
+
+                      await db.collection("circolari/${circolare.id}/answers").add(answer);
+
+                      Navigator.of(context).pop();
+                    }
                   },
                 ),
               ),

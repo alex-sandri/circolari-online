@@ -20,8 +20,14 @@ class CircolareField extends StatelessWidget {
   }): assert([ "string", "int", "double", "bool" ].contains(type)),
       assert([ "null", type].contains(defaultValue.runtimeType.toString().toLowerCase()));
 
+  dynamic _value;
+
+  dynamic get value => _value;
+
   @override
   Widget build(BuildContext context) {
+    _value = defaultValue;
+
     if (type == "bool")
     {
       bool value = defaultValue ?? false;
@@ -31,8 +37,11 @@ class CircolareField extends StatelessWidget {
           return CheckboxListTile(
             title: Text(label),
             value: value,
-            onChanged: (checked) =>
-              setState(() => value = checked),
+            onChanged: (checked) {
+              _value = checked;
+
+              setState(() => value = checked);
+            },
           );
         },
       );
@@ -44,6 +53,7 @@ class CircolareField extends StatelessWidget {
       decoration: InputDecoration(
         labelText: label,
       ),
+      onChanged: (value) => _value = value,
       validator: (value) {
         String error;
 

@@ -4,11 +4,14 @@ import 'package:flutter/material.dart';
 
 class Circolare
 {
+  final String id;
+
   final String title;
 
   final List<CircolareField> fields;
 
   Circolare({
+    this.id,
     @required this.title,
     @required this.fields,
   });
@@ -25,6 +28,7 @@ class Circolare
 
   static Circolare fromFirestore(QueryDocumentSnapshot document) =>
     Circolare(
+      id: document.id,
       title: document.data()["title"],
       fields: (document.data()["fields"] as List).map((field) => CircolareField(
         type: field["type"],
