@@ -12,8 +12,8 @@ service cloud.firestore {
         allow create: if incomingData().fields.size() > 0
           && incomingData().metadata.sent == request.time;
 
-        allow update: if incomingData().sent == existingData().sent
-          && incomingData().handled == true;
+        allow update: if incomingData().metadata.sent == existingData().metadata.sent
+          && incomingData().metadata.handled == true;
 
         allow delete: if false;
       }
