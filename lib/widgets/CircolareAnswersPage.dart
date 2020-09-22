@@ -1,4 +1,5 @@
 import 'package:circolari_online/models/Circolare.dart';
+import 'package:circolari_online/models/CircolareAnswer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -51,7 +52,16 @@ class CircolareAnswersPage extends StatelessWidget {
                 separatorBuilder: (context, index) => Divider(),
                 itemCount: snapshot.data.size,
                 itemBuilder: (context, index) {
-                  return ListTile();
+                  return ListTile(
+                    title: Text(snapshot.data.docs[index].id),
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => CircolareAnswerPage(
+                          CircolareAnswer.fromFirestore(snapshot.data.docs[index])
+                        ),
+                      ),
+                    ),
+                  );
                 },
               );
             }
