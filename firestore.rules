@@ -12,9 +12,16 @@ service cloud.firestore {
         allow create: if incomingData().fields.size() > 0
           && incomingData().metadata.sent == request.time;
 
-        allow update, delete: if false;
+        allow update: if incomingData().sent == existingData().sent
+          && incomingData().handled == true;
+
+        allow delete: if false;
       }
     }
+  }
+
+  function existingData() {
+    return resource.data;
   }
 
   function incomingData() {
