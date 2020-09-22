@@ -62,7 +62,16 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
                                 decoration: InputDecoration(
                                   labelText: "Etichetta",
                                 ),
-                                onChanged: (value) => setState(() => _label = value),
+                                onChanged: (value) {
+                                  if (Circolare.isRestrictedFieldLabel(value))
+                                  {
+                                    setState(() => _label = "");
+
+                                    return;
+                                  }
+
+                                  setState(() => _label = value);
+                                },
                               ),
                               CheckboxListTile(
                                 title: Text("Campo obbligatorio"),

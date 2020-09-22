@@ -48,4 +48,6 @@ class Circolare
 
     return Circolare.fromFirestore(document);
   }
+
+  static bool isRestrictedFieldLabel(String label) => [ "metadata" ].contains(label);
 }
