@@ -23,7 +23,7 @@ class CircolareAnswer
     CircolareAnswer(
       id: document.id,
       parentId: document.reference.parent.parent.id,
-      fields: document.data()..removeWhere((key, value) => key == "metadata"),
+      fields: document.data()["fields"],
       metadata: document.data()["metadata"],
     );
 }

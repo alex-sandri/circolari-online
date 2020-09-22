@@ -51,9 +51,14 @@ class CircolarePage extends StatelessWidget {
                     {
                       final FirebaseFirestore db = FirebaseFirestore.instance;
 
-                      final Map<String, dynamic> answer = {};
+                      final Map<String, dynamic> answer = {
+                        "fields": {},
+                        "metadata": {
+                          "sent": FieldValue.serverTimestamp(),
+                        },
+                      };
 
-                      circolare.fields.forEach((field) => answer[field.label] = field.value);
+                      circolare.fields.forEach((field) => answer["fields"][field.label] = field.value);
 
                       await db.collection("circolari/${circolare.id}/answers").add(answer);
 
