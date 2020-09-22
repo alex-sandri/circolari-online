@@ -56,7 +56,7 @@ class CircolareAnswersPage extends StatelessWidget {
                   final CircolareAnswer answer = CircolareAnswer.fromFirestore(snapshot.data.docs[index]);
 
                   return ListTile(
-                    leading: answer.metadata["handled"]
+                    leading: (answer.metadata["handled"] ?? false)
                       ? Icon(Icons.check)
                       : null,
                     title: Text(snapshot.data.docs[index].id),
