@@ -26,7 +26,7 @@ class Circolare
     }).toList(),
   };
 
-  static Circolare fromFirestore(QueryDocumentSnapshot document) =>
+  static Circolare fromFirestore(DocumentSnapshot document) =>
     Circolare(
       id: document.id,
       title: document.data()["title"],
