@@ -37,6 +37,11 @@ class MyApp extends StatelessWidget {
                   final ScanResult result = await BarcodeScanner.scan(
                     options: ScanOptions(
                       restrictFormat: [ BarcodeFormat.qr ],
+                      strings: {
+                        "cancel": "Annulla",
+                        "flash_on": "Accendi flash",
+                        "flash_off": "Spegni flash",
+                      },
                     ),
                   );
 
