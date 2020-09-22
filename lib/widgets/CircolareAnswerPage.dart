@@ -1,4 +1,5 @@
 import 'package:circolari_online/models/CircolareAnswer.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class CircolareAnswerPage extends StatelessWidget {
@@ -14,6 +15,23 @@ class CircolareAnswerPage extends StatelessWidget {
         child: Scaffold(
           appBar: AppBar(
             title: Text(answer.id),
+            actions: [
+              Builder(
+                builder: (context) => IconButton(
+                  icon: Icon(Icons.check),
+                  tooltip: "Segna come gestita",
+                  onPressed: () async {
+                    final FirebaseFirestore db = FirebaseFirestore.instance;
+
+                    await db.collection("circolari/${answer.parentId}/answers").doc(answer.id).update({ "metadata.handled": true });
+
+                    Scaffold
+                      .of(context)
+                      .showSnackBar(SnackBar(content: Text("Risposta segnata come gestita")));
+                  },
+                ),
+              ),
+            ],
           ),
           body: ListView.builder(
             itemCount: answer.fields.length,
