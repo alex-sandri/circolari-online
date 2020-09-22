@@ -1,3 +1,4 @@
+import 'package:barcode_scan/barcode_scan.dart';
 import 'package:circolari_online/models/Circolare.dart';
 import 'package:circolari_online/widgets/CircolareAnswersPage.dart';
 import 'package:circolari_online/widgets/CreateCircolarePage.dart';
@@ -30,8 +31,17 @@ class MyApp extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.qr_code),
               tooltip: "Compila circolare",
-              onPressed: () {
-                // TODO
+              onPressed: () async {
+                final ScanResult result = await BarcodeScanner.scan(
+                  options: ScanOptions(
+                    restrictFormat: [ BarcodeFormat.qr ],
+                  ),
+                );
+
+                if (result.type == ResultType.Barcode)
+                {
+                  print(result.rawContent);
+                }
               },
             ),
           ],
