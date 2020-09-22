@@ -22,7 +22,11 @@ class CircolareAnswerPage extends StatelessWidget {
 
               return ListTile(
                 title: SelectableText(field.key),
-                subtitle: SelectableText(field.value.toString()),
+                subtitle: SelectableText(
+                  field.value.runtimeType == bool
+                    ? (field.value ? "Sì" : "No")
+                    : field.value.toString(),
+                ),
               );
             }
           ),
