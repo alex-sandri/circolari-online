@@ -23,6 +23,8 @@ class CircolareAnswerPage extends StatelessWidget {
                   onPressed: () async {
                     final FirebaseFirestore db = FirebaseFirestore.instance;
 
+                    print(answer.metadata);
+
                     await db.collection("circolari/${answer.parentId}/answers").doc(answer.id).update({ "metadata.handled": true });
 
                     Scaffold

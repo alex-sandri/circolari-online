@@ -10,16 +10,20 @@ class CircolareAnswer
 
   final Map<String, dynamic> fields;
 
+  final Map<String, dynamic> metadata;
+
   CircolareAnswer({
     @required this.id,
     @required this.parentId,
     @required this.fields,
+    @required this.metadata,
   });
 
   static CircolareAnswer fromFirestore(DocumentSnapshot document) =>
     CircolareAnswer(
       id: document.id,
       parentId: document.reference.parent.parent.id,
-      fields: document.data(),
+      fields: document.data()..removeWhere((key, value) => key == "metadata"),
+      metadata: document.data()["metadata"],
     );
 }
