@@ -53,13 +53,16 @@ class CircolareAnswersPage extends StatelessWidget {
                 separatorBuilder: (context, index) => Divider(),
                 itemCount: snapshot.data.size,
                 itemBuilder: (context, index) {
+                  final CircolareAnswer answer = CircolareAnswer.fromFirestore(snapshot.data.docs[index]);
+
                   return ListTile(
+                    leading: answer.metadata["handled"]
+                      ? Icon(Icons.check)
+                      : null,
                     title: Text(snapshot.data.docs[index].id),
                     onTap: () => Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => CircolareAnswerPage(
-                          CircolareAnswer.fromFirestore(snapshot.data.docs[index])
-                        ),
+                        builder: (context) => CircolareAnswerPage(answer),
                       ),
                     ),
                   );
