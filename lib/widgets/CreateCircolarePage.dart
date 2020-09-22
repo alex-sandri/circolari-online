@@ -72,6 +72,13 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
 
                                   setState(() => _label = value);
                                 },
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                validator: (value) {
+                                  if (Circolare.isRestrictedFieldLabel(value))
+                                    return "Un campo non può avere come etichetta $value";
+
+                                  return null;
+                                },
                               ),
                               CheckboxListTile(
                                 title: Text("Campo obbligatorio"),
@@ -101,6 +108,13 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
 
                                     setState(() => _defaultValues[_type] = parsedValue);
                                   },
+                                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                                  validator: (value) {
+                                    if (double.tryParse(value) == null)
+                                      return "Il numero non è valido";
+
+                                    return null;
+                                  },
                                 ),
 
                               if (_type == "int")
@@ -115,6 +129,13 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
                                     if (parsedValue == null) return;
 
                                     setState(() => _defaultValues[_type] = parsedValue);
+                                  },
+                                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                                  validator: (value) {
+                                    if (int.tryParse(value) == null)
+                                      return "Il numero deve essere intero";
+
+                                    return null;
                                   },
                                 ),
 
