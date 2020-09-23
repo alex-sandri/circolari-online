@@ -1,9 +1,4 @@
-import 'package:barcode_scan/barcode_scan.dart';
-import 'package:circolari_online/models/Circolare.dart';
 import 'package:circolari_online/routes/Home.dart';
-import 'package:circolari_online/widgets/CircolareAnswersPage.dart';
-import 'package:circolari_online/widgets/CircolarePage.dart';
-import 'package:circolari_online/widgets/CreateCircolarePage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
