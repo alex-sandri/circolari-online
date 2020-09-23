@@ -184,11 +184,13 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: TextField(
+                child: TextFormField(
                   controller: _titleController,
                   decoration: InputDecoration(
                     labelText: "Titolo",
                   ),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (value) => value.isEmpty ? "Il titolo non può essere vuoto" : null,
                 ),
               ),
               Divider(),
