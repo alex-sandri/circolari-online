@@ -229,6 +229,15 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
                   color: Theme.of(context).accentColor,
                   colorBrightness: Theme.of(context).accentColorBrightness,
                   onPressed: () async {
+                    if (_fields.isEmpty)
+                      showDialog(
+                        context: context,
+                        child: AlertDialog(
+                          title: Text("Errore"),
+                          content: Text("Devi inserire almeno un campo"),
+                        ),
+                      );
+
                     if (_fields.isEmpty || _titleController.text.isEmpty) return;
 
                     final FirebaseFirestore db = FirebaseFirestore.instance;
