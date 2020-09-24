@@ -16,36 +16,34 @@ class Home extends StatelessWidget {
         appBar: AppBar(
           title: Text("Circolari Online"),
           actions: [
-            Builder(
-              builder: (context) => IconButton(
-                icon: Icon(Icons.qr_code),
-                tooltip: "Compila circolare",
-                onPressed: () async {
-                  final ScanResult result = await BarcodeScanner.scan(
-                    options: ScanOptions(
-                      restrictFormat: [ BarcodeFormat.qr ],
-                      strings: {
-                        "cancel": "Annulla",
-                        "flash_on": "Accendi flash",
-                        "flash_off": "Spegni flash",
-                      },
-                    ),
-                  );
+            IconButton(
+              icon: Icon(Icons.qr_code),
+              tooltip: "Compila circolare",
+              onPressed: () async {
+                final ScanResult result = await BarcodeScanner.scan(
+                  options: ScanOptions(
+                    restrictFormat: [ BarcodeFormat.qr ],
+                    strings: {
+                      "cancel": "Annulla",
+                      "flash_on": "Accendi flash",
+                      "flash_off": "Spegni flash",
+                    },
+                  ),
+                );
 
-                  if (result.type == ResultType.Barcode)
-                  {
-                    final String id = result.rawContent;
+                if (result.type == ResultType.Barcode)
+                {
+                  final String id = result.rawContent;
 
-                    final Circolare circolare = await Circolare.fromString(id);
+                  final Circolare circolare = await Circolare.fromString(id);
 
-                    Navigator
-                      .of(context)
-                      .push(MaterialPageRoute(
-                        builder: (context) => CircolarePage(circolare),
-                      ));
-                  }
-                },
-              ),
+                  Navigator
+                    .of(context)
+                    .push(MaterialPageRoute(
+                      builder: (context) => CircolarePage(circolare),
+                    ));
+                }
+              },
             ),
           ],
         ),
