@@ -15,61 +15,79 @@ class CircolareAnswersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: GestureDetector(
-        onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text("Risposte: " + circolare.title),
-            actions: [
-              IconButton(
-                icon: Icon(Icons.share),
-                tooltip: "Condividi",
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    child: Dialog(
-                      backgroundColor: Colors.white,
-                      child: QrImage(
-                        data: circolare.toString(),
-                        version: QrVersions.auto,
+      child: DefaultTabController(
+        length: 2,
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+          child: Scaffold(
+            appBar: AppBar(
+              title: Text(circolare.title),
+              actions: [
+                IconButton(
+                  icon: Icon(Icons.share),
+                  tooltip: "Condividi",
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      child: Dialog(
+                        backgroundColor: Colors.white,
+                        child: QrImage(
+                          data: circolare.toString(),
+                          version: QrVersions.auto,
+                        ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
+              ],
+              bottom: TabBar(
+                tabs: [
+                  Tab(icon: Icon(Icons.question_answer), text: "Risposte"),
+                  Tab(icon: Icon(Icons.settings), text: "Impostazioni"),
+                ],
               ),
-            ],
+            ),
+            body: TabBarView(
+              children: [
+                StreamBuilder<QuerySnapshot>(
+                  stream: db.collection("circolari/${circolare.id}/answers").snapshots(),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) return LinearProgressIndicator();
+
+                    if (snapshot.data.docs.isEmpty)
+                      return Center(
+                        child: Text("Non sono presenti risposte"),
+                      );
+
+                    return ListView.separated(
+                      separatorBuilder: (context, index) => Divider(),
+                      itemCount: snapshot.data.size,
+                      itemBuilder: (context, index) {
+                        final CircolareAnswer answer = CircolareAnswer.fromFirestore(snapshot.data.docs[index]);
+
+                        return ListTile(
+                          leading: (answer.metadata["handled"] ?? false)
+                            ? Icon(Icons.check)
+                            : null,
+                          title: Text(snapshot.data.docs[index].id),
+                          onTap: () => Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => CircolareAnswerPage(answer),
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  }
+                ),
+                ListView(
+                  children: [
+
+                  ],
+                ),
+              ],
+            ),
           ),
-          body: StreamBuilder<QuerySnapshot>(
-            stream: db.collection("circolari/${circolare.id}/answers").snapshots(),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) return LinearProgressIndicator();
-
-              if (snapshot.data.docs.isEmpty)
-                return Center(
-                  child: Text("Non sono presenti risposte"),
-                );
-
-              return ListView.separated(
-                separatorBuilder: (context, index) => Divider(),
-                itemCount: snapshot.data.size,
-                itemBuilder: (context, index) {
-                  final CircolareAnswer answer = CircolareAnswer.fromFirestore(snapshot.data.docs[index]);
-
-                  return ListTile(
-                    leading: (answer.metadata["handled"] ?? false)
-                      ? Icon(Icons.check)
-                      : null,
-                    title: Text(snapshot.data.docs[index].id),
-                    onTap: () => Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => CircolareAnswerPage(answer),
-                      ),
-                    ),
-                  );
-                },
-              );
-            }
-          )
         ),
       ),
     );
