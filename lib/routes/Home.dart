@@ -4,6 +4,7 @@ import 'package:circolari_online/widgets/CircolareAnswersPage.dart';
 import 'package:circolari_online/widgets/CircolarePage.dart';
 import 'package:circolari_online/widgets/CreateCircolarePage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
@@ -44,6 +45,11 @@ class Home extends StatelessWidget {
                     ));
                 }
               },
+            ),
+            IconButton(
+              icon: Icon(Icons.exit_to_app),
+              tooltip: "Esci",
+              onPressed: FirebaseAuth.instance.signOut,
             ),
           ],
         ),
