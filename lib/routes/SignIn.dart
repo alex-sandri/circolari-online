@@ -1,11 +1,21 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class SignIn extends StatelessWidget {
+class SignIn extends StatefulWidget {
+  @override
+  _SignInState createState() => _SignInState();
+}
+
+class _SignInState extends State<SignIn> {
   final FirebaseAuth auth = FirebaseAuth.instance;
 
   final TextEditingController _emailController = TextEditingController();
+
   final TextEditingController _passwordController = TextEditingController();
+
+  String _emailError;
+
+  String _passwordError;
 
   @override
   Widget build(BuildContext context) {
@@ -22,12 +32,14 @@ class SignIn extends StatelessWidget {
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
                 labelText: "Email",
+                errorText: _emailError,
               ),
             ),
             TextField(
               controller: _passwordController,
               decoration: InputDecoration(
                 labelText: "Password",
+                errorText: _passwordError,
               ),
               obscureText: true,
             ),
@@ -43,22 +55,16 @@ class SignIn extends StatelessWidget {
                 }
                 on FirebaseAuthException catch (e)
                 {
-                  String error = "Errore sconosciuto";
+                  _emailError = _passwordError = null;
 
                   switch (e.code)
                   {
-                    case "user-not-found": error = "Non è presente un utente con questa email"; break;
-                    case "wrong-password": error = "Password errata"; break;
-                    case "invalid-email": error = "Email non valida"; break;
+                    case "invalid-email": _emailError = "Email non valida"; break;
+                    case "user-not-found": _emailError = "Non è presente un utente con questa email"; break;
+                    case "wrong-password": _passwordError = "Password errata"; break;
                   }
 
-                  showDialog(
-                    context: context,
-                    child: AlertDialog(
-                      title: Text("Errore"),
-                      content: Text(error),
-                    ),
-                  );
+                  setState(() {});
                 }
               },
             ),
