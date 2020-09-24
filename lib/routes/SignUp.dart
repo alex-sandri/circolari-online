@@ -1,13 +1,13 @@
-import 'package:circolari_online/routes/SignUp.dart';
+import 'package:circolari_online/routes/SignIn.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class SignIn extends StatefulWidget {
+class SignUp extends StatefulWidget {
   @override
-  _SignInState createState() => _SignInState();
+  _SignUpState createState() => _SignUpState();
 }
 
-class _SignInState extends State<SignIn> {
+class _SignUpState extends State<SignUp> {
   final FirebaseAuth auth = FirebaseAuth.instance;
 
   final TextEditingController _emailController = TextEditingController();
@@ -23,11 +23,11 @@ class _SignInState extends State<SignIn> {
     return Material(
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Accedi"),
+          title: Text("Registrati"),
           actions: [
             FlatButton(
-              child: Text("Registrati"),
-              onPressed: () => Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => SignUp())),
+              child: Text("Accedi"),
+              onPressed: () => Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => SignIn())),
             ),
           ],
         ),
@@ -51,11 +51,11 @@ class _SignInState extends State<SignIn> {
               obscureText: true,
             ),
             FlatButton(
-              child: Text("Accedi"),
+              child: Text("Registrati"),
               onPressed: () async {
                 try
                 {
-                  await FirebaseAuth.instance.signInWithEmailAndPassword(
+                  await FirebaseAuth.instance.createUserWithEmailAndPassword(
                     email: _emailController.text,
                     password: _passwordController.text,
                   );
@@ -67,8 +67,8 @@ class _SignInState extends State<SignIn> {
                   switch (e.code)
                   {
                     case "invalid-email": _emailError = "Email non valida"; break;
-                    case "user-not-found": _emailError = "Non è presente un utente con questa email"; break;
-                    case "wrong-password": _passwordError = "Password errata"; break;
+                    case "email-already-in-use": _emailError = "È già presente un utente con questa email"; break;
+                    case "weak-password": _passwordError = "Password poco sicura"; break;
                   }
 
                   setState(() {});
