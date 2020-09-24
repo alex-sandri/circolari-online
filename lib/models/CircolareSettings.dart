@@ -12,7 +12,7 @@ class CircolareSettings
 
   get allowNewAnswers => _allowNewAnswers;
 
-  set allowNewAnswers(bool allow) => null;
+  set allowNewAnswers(bool allow) => set("allowNewAnswers", allow);
 
   CircolareSettings._({
     @required this.id,
