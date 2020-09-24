@@ -36,7 +36,7 @@ class Home extends StatelessWidget {
                 {
                   final String id = result.rawContent;
 
-                  final Circolare circolare = await Circolare.fromString(id);
+                  final Circolare circolare = await Circolare.get(id);
 
                   Navigator
                     .of(context)
@@ -53,21 +53,21 @@ class Home extends StatelessWidget {
             ),
           ],
         ),
-        body: StreamBuilder<QuerySnapshot>(
-          stream: db.collection("circolari").snapshots(),
+        body: StreamBuilder<List<Circolare>>(
+          stream: Circolare.getAll(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) return LinearProgressIndicator();
 
-            if (snapshot.data.docs.isEmpty)
+            if (snapshot.data.isEmpty)
               return Center(
                 child: Text("Non sono presenti circolari"),
               );
 
             return ListView.separated(
               separatorBuilder: (context, index) => Divider(),
-              itemCount: snapshot.data.size,
+              itemCount: snapshot.data.length,
               itemBuilder: (context, index) {
-                final Circolare circolare = Circolare.fromFirestore(snapshot.data.docs[index]);
+                final Circolare circolare = snapshot.data[index];
 
                 return ListTile(
                   title: Text(circolare.title),

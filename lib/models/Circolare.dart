@@ -1,9 +1,12 @@
 import 'package:circolari_online/widgets/CircolareField.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Circolare
 {
+  static final FirebaseFirestore _db = FirebaseFirestore.instance;
+
   final String id;
 
   final String title;
@@ -15,6 +18,16 @@ class Circolare
     @required this.title,
     @required this.fields,
   });
+
+  static Future<Circolare> get(String id) async =>
+    Circolare.fromFirestore(await _db.collection("circolari").doc(id).get());
+
+  static Stream<List<Circolare>> getAll() async* {
+    await for (final QuerySnapshot snapshot in _db.collection("circolari").where("owner", isEqualTo: FirebaseAuth.instance.currentUser.uid).snapshots())
+    {
+      yield snapshot.docs.map((doc) => Circolare.fromFirestore(doc)).toList();
+    }
+  }
 
   Map<String, dynamic> toFirestore() => {
     "title": title,
@@ -40,14 +53,6 @@ class Circolare
 
   @override
   String toString() => id;
-
-  static Future<Circolare> fromString(String string) async {
-    final FirebaseFirestore db = FirebaseFirestore.instance;
-
-    final DocumentSnapshot document = await db.collection("circolari").doc(string).get();
-
-    return Circolare.fromFirestore(document);
-  }
 
   static bool isRestrictedFieldLabel(String label) => [ "metadata" ].contains(label);
 }
