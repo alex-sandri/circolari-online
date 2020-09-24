@@ -11,7 +11,29 @@ class SignIn extends StatelessWidget {
         appBar: AppBar(
           title: Text("Accedi"),
         ),
-        body: Container(),
+        body: ListView(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          children: [
+            TextField(
+              keyboardType: TextInputType.emailAddress,
+              decoration: InputDecoration(
+                labelText: "Email",
+              ),
+            ),
+            TextField(
+              decoration: InputDecoration(
+                labelText: "Password",
+              ),
+              obscureText: true,
+            ),
+            FlatButton(
+              child: Text("Accedi"),
+              onPressed: () {
+                // TODO
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
