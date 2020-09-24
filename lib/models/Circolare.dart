@@ -7,6 +7,8 @@ class Circolare
 {
   static final FirebaseFirestore _db = FirebaseFirestore.instance;
 
+  static final FirebaseAuth _auth = FirebaseAuth.instance;
+
   final String id;
 
   final String title;
@@ -19,14 +21,20 @@ class Circolare
     @required this.fields,
   });
 
-  static Future<void> create(Circolare circolare) =>
-    _db.collection("circolari").add(circolare.toFirestore());
+  Future<void> create() =>
+    _db.collection("circolari").add({
+      "metadata": {
+        "owner": _auth.currentUser.uid,
+        "createdAt": FieldValue.serverTimestamp(),
+      },
+      ...this.toFirestore(),
+    });
 
   static Future<Circolare> get(String id) async =>
     Circolare.fromFirestore(await _db.collection("circolari").doc(id).get());
 
   static Stream<List<Circolare>> getAll() async* {
-    await for (final QuerySnapshot snapshot in _db.collection("circolari").where("owner", isEqualTo: FirebaseAuth.instance.currentUser.uid).snapshots())
+    await for (final QuerySnapshot snapshot in _db.collection("circolari").where("owner", isEqualTo: _auth.currentUser.uid).snapshots())
     {
       yield snapshot.docs.map((doc) => Circolare.fromFirestore(doc)).toList();
     }

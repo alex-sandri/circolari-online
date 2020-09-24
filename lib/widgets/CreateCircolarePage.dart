@@ -242,10 +242,10 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
 
                     if (_fields.isEmpty || _titleController.text.isEmpty) return;
 
-                    await Circolare.create(Circolare(
+                    await Circolare(
                       title: _titleController.text,
                       fields: _fields,
-                    ));
+                    ).create();
 
                     Navigator.of(context).pop();
                   },
