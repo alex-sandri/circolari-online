@@ -34,7 +34,7 @@ class Circolare
     Circolare.fromFirestore(await _db.collection("circolari").doc(id).get());
 
   static Stream<List<Circolare>> getAll() async* {
-    await for (final QuerySnapshot snapshot in _db.collection("circolari").where("owner", isEqualTo: _auth.currentUser.uid).snapshots())
+    await for (final QuerySnapshot snapshot in _db.collection("circolari").where("metadata.owner", isEqualTo: _auth.currentUser.uid).snapshots())
     {
       yield snapshot.docs.map((doc) => Circolare.fromFirestore(doc)).toList();
     }
