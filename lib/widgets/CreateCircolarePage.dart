@@ -12,6 +12,8 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
 
   final TextEditingController _titleController = TextEditingController();
 
+  String _titleError;
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -187,9 +189,11 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
                   controller: _titleController,
                   decoration: InputDecoration(
                     labelText: "Titolo",
+                    errorText: _titleError,
                   ),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) => value.isEmpty ? "Il titolo non può essere vuoto" : null,
+                  onChanged: (value) => setState(() => _titleError = null),
                 ),
               ),
               Divider(),
@@ -238,6 +242,9 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
                           content: Text("Devi inserire almeno un campo"),
                         ),
                       );
+
+                    if (_titleController.text.isEmpty)
+                      setState(() => _titleError = "Il titolo non può essere vuoto");
 
                     if (_fields.isEmpty || _titleController.text.isEmpty) return;
 
