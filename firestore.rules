@@ -9,7 +9,7 @@ service cloud.firestore {
       allow update, delete: if false;
 
       match /answers/{answerId} {
-        allow read: if get(/databases/$(database)/documents/circolari/$(circolareId)).metadata.owner == request.auth.uid;
+        allow read: if get(/databases/$(database)/documents/circolari/$(circolareId)).data.metadata.owner == request.auth.uid;
 
         allow create: if incomingData().fields.size() > 0
           && incomingData().metadata.sent == request.time;
