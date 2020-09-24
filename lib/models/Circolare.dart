@@ -19,6 +19,9 @@ class Circolare
     @required this.fields,
   });
 
+  static Future<void> create(Circolare circolare) =>
+    _db.collection("circolari").add(circolare.toFirestore());
+
   static Future<Circolare> get(String id) async =>
     Circolare.fromFirestore(await _db.collection("circolari").doc(id).get());
 

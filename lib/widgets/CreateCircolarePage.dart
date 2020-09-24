@@ -242,12 +242,10 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
 
                     if (_fields.isEmpty || _titleController.text.isEmpty) return;
 
-                    final FirebaseFirestore db = FirebaseFirestore.instance;
-
-                    await db.collection("circolari").add(Circolare(
+                    await Circolare.create(Circolare(
                       title: _titleController.text,
                       fields: _fields,
-                    ).toFirestore());
+                    ));
 
                     Navigator.of(context).pop();
                   },
