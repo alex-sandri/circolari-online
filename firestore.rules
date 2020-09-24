@@ -15,13 +15,22 @@ service cloud.firestore {
         allow read: if get(/databases/$(database)/documents/circolari/$(circolareId)).data.metadata.owner == request.auth.uid;
 
         allow create: if incomingData().fields.size() > 0
-          && incomingData().metadata.sent == request.time;
+          && incomingData().metadata.sent == request.time
+          && allowNewAnswers();
 
         allow update: if incomingData().fields.diff(existingData().fields).affectedKeys().size() == 0
           && incomingData().metadata.sent == existingData().metadata.sent
           && incomingData().metadata.handled == true;
 
         allow delete: if false;
+
+        function allowNewAnswers() {
+          let circolare = get(/databases/$(database)/documents/circolari/$(circolareId)).data;
+
+          return circolare.settings.allowNewAnswers == true
+            || !("settings" in circolare)
+            || !("allowNewAnswers" in circolare.settings);
+        }
       }
     }
   }
