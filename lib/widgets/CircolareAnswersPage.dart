@@ -1,5 +1,6 @@
 import 'package:circolari_online/models/Circolare.dart';
 import 'package:circolari_online/models/CircolareAnswer.dart';
+import 'package:circolari_online/models/CircolareSettings.dart';
 import 'package:circolari_online/widgets/CircolareAnswerPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -80,16 +81,38 @@ class CircolareAnswersPage extends StatelessWidget {
                     );
                   }
                 ),
-                ListView(
-                  children: [
-
-                  ],
-                ),
+                CircolareSettingsWidget(circolare),
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+}
+
+class CircolareSettingsWidget extends StatelessWidget {
+  final Circolare circolare;
+
+  CircolareSettingsWidget(this.circolare);
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<CircolareSettings>(
+      stream: CircolareSettings.of(circolare).asBroadcastStream(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) return Container();
+
+        return ListView(
+          children: [
+            SwitchListTile(
+              title: Text("Accetta nuove risposte"),
+              value: snapshot.data.allowNewAnswers,
+              onChanged: (allow) => snapshot.data.allowNewAnswers = allow,
+            ),
+          ],
+        );
+      },
     );
   }
 }
