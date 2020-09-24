@@ -2,12 +2,14 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     match /circolari/{circolareId} {
-      allow read, create: if true;
+      allow read: if existingData().metadata.owner == request.auth.uid;
+
+      allow create: if incomingData().metadata.owner == request.auth.uid;
 
       allow update, delete: if false;
 
       match /answers/{answerId} {
-        allow read: if true;
+        allow read: if get(/databases/$(database)/documents/circolari/$(circolareId)).metadata.owner == request.auth.uid;
 
         allow create: if incomingData().fields.size() > 0
           && incomingData().metadata.sent == request.time;
