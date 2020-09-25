@@ -30,8 +30,13 @@ class Circolare
       ...this.toFirestore(),
     });
 
-  static Future<Circolare> get(String id) async =>
-    Circolare.fromFirestore(await _db.collection("circolari").doc(id).get());
+  static Future<Circolare> get(String id) async {
+    final DocumentSnapshot document = await _db.collection("circolari").doc(id).get();
+
+    if (!document.exists) return null;
+
+    return Circolare.fromFirestore(document);
+  }
 
   static Stream<List<Circolare>> getAll() async* {
     await for (final QuerySnapshot snapshot in _db.collection("circolari").where("metadata.owner", isEqualTo: _auth.currentUser.uid).snapshots())
