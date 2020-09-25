@@ -1,6 +1,7 @@
 import 'package:circolari_online/models/Circolare.dart';
 import 'package:circolari_online/models/CircolareAnswer.dart';
 import 'package:circolari_online/models/CircolareSettings.dart';
+import 'package:circolari_online/routes/Home.dart';
 import 'package:circolari_online/widgets/CircolareAnswerPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -127,7 +128,16 @@ class CircolareSettingsWidget extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.zero,
                 ),
-                onPressed: () => circolare.delete(),
+                onPressed: () async {
+                  await circolare.delete();
+
+                  Navigator
+                    .of(context)
+                    .pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (context) => Home()),
+                      (route) => false,
+                    );
+                },
               ),
             ),
           ],
