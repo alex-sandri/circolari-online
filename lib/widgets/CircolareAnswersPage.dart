@@ -11,7 +11,7 @@ class CircolareAnswersPage extends StatelessWidget {
 
   CircolareAnswersPage(this.circolare);
 
-  final FirebaseFirestore db = FirebaseFirestore.instance;
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class CircolareAnswersPage extends StatelessWidget {
             body: TabBarView(
               children: [
                 StreamBuilder<QuerySnapshot>(
-                  stream: db.collection("circolari/${circolare.id}/answers").snapshots(),
+                  stream: _db.collection("circolari/${circolare.id}/answers").snapshots(),
                   builder: (context, snapshot) {
                     if (!snapshot.hasData) return LinearProgressIndicator();
 
@@ -103,12 +103,32 @@ class CircolareSettingsWidget extends StatelessWidget {
       builder: (context, snapshot) {
         if (!snapshot.hasData) return Container();
 
-        return ListView(
+        return Column(
           children: [
-            SwitchListTile(
-              title: Text("Accetta nuove risposte"),
-              value: snapshot.data.allowNewAnswers,
-              onChanged: (allow) => snapshot.data.allowNewAnswers = allow,
+            Expanded(
+              child: ListView(
+                children: [
+                  SwitchListTile(
+                    title: Text("Accetta nuove risposte"),
+                    value: snapshot.data.allowNewAnswers,
+                    onChanged: (allow) => snapshot.data.allowNewAnswers = allow,
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              width: double.infinity,
+              child: FlatButton.icon(
+                icon: Icon(Icons.delete),
+                label: Text("Elimina"),
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                padding: const EdgeInsets.all(16),
+                color: Colors.red,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.zero,
+                ),
+                onPressed: () => circolare.delete(),
+              ),
             ),
           ],
         );

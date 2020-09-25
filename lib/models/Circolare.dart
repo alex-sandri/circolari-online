@@ -30,6 +30,8 @@ class Circolare
       ...this.toFirestore(),
     });
 
+  Future<void> delete() => _db.collection("circolari").doc(id).delete();
+
   static Future<Circolare> get(String id) async {
     final DocumentSnapshot document = await _db.collection("circolari").doc(id).get();
 
