@@ -1,5 +1,6 @@
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:circolari_online/models/Circolare.dart';
+import 'package:circolari_online/routes/SignIn.dart';
 import 'package:circolari_online/widgets/CircolareAnswersPage.dart';
 import 'package:circolari_online/widgets/CircolarePage.dart';
 import 'package:circolari_online/widgets/CreateCircolarePage.dart';
@@ -8,7 +9,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
+  final FirebaseAuth auth = FirebaseAuth.instance;
+
   final FirebaseFirestore db = FirebaseFirestore.instance;
+
+  bool _isSignedIn() => auth.currentUser != null;
 
   @override
   Widget build(BuildContext context) {
@@ -46,43 +51,56 @@ class Home extends StatelessWidget {
                 }
               },
             ),
-            IconButton(
-              icon: Icon(Icons.exit_to_app),
-              tooltip: "Esci",
-              onPressed: FirebaseAuth.instance.signOut,
-            ),
+
+            if (_isSignedIn())
+              IconButton(
+                icon: Icon(Icons.exit_to_app),
+                tooltip: "Esci",
+                onPressed: FirebaseAuth.instance.signOut,
+              ),
+
+            if (!_isSignedIn())
+              IconButton(
+                icon: Icon(Icons.login),
+                tooltip: "Accedi",
+                onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => SignIn())),
+              ),
           ],
         ),
-        body: StreamBuilder<List<Circolare>>(
-          stream: Circolare.getAll(),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) return LinearProgressIndicator();
+        body: _isSignedIn()
+          ?
+            StreamBuilder<List<Circolare>>(
+              stream: Circolare.getAll(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) return LinearProgressIndicator();
 
-            if (snapshot.data.isEmpty)
-              return Center(
-                child: Text("Non sono presenti circolari"),
-              );
+                if (snapshot.data.isEmpty)
+                  return Center(
+                    child: Text("Non sono presenti circolari"),
+                  );
 
-            return ListView.separated(
-              separatorBuilder: (context, index) => Divider(),
-              itemCount: snapshot.data.length,
-              itemBuilder: (context, index) {
-                final Circolare circolare = snapshot.data[index];
+                return ListView.separated(
+                  separatorBuilder: (context, index) => Divider(),
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (context, index) {
+                    final Circolare circolare = snapshot.data[index];
 
-                return ListTile(
-                  title: Text(circolare.title),
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CircolareAnswersPage(circolare)
-                    ),
-                  ),
+                    return ListTile(
+                      title: Text(circolare.title),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CircolareAnswersPage(circolare)
+                        ),
+                      ),
+                    );
+                  },
                 );
-              },
-            );
-          }
-        ),
-        floatingActionButton: Builder(
+              }
+            )
+          :
+            Container(),
+        floatingActionButton: !_isSignedIn() ? null : Builder(
           builder: (context) => FloatingActionButton(
             child: Icon(Icons.add),
             tooltip: "Crea nuova circolare",

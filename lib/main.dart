@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       darkTheme: ThemeData.dark(),
       home: StreamBuilder<User>(
         stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, snapshot) => snapshot.data == null ? SignIn() : Home(),
+        builder: (context, snapshot) => snapshot.data == null ? Home() : Home(),
       ),
       debugShowCheckedModeBanner: false,
       localizationsDelegates: [
