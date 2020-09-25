@@ -1,5 +1,6 @@
 import 'package:circolari_online/widgets/CircolareField.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -30,7 +31,7 @@ class Circolare
       ...this.toFirestore(),
     });
 
-  Future<void> delete() => _db.collection("circolari").doc(id).delete();
+  Future<void> delete() => CloudFunctions.instance.getHttpsCallable(functionName: "deleteCircolare").call();
 
   static Future<Circolare> get(String id) async {
     final DocumentSnapshot document = await _db.collection("circolari").doc(id).get();
