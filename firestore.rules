@@ -2,7 +2,7 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     match /circolari/{circolareId} {
-      allow read: if existingData().metadata.owner == request.auth.uid;
+      allow read: if true;
 
       allow create: if incomingData().metadata.owner == request.auth.uid;
 
