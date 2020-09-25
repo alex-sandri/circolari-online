@@ -1,7 +1,11 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 
+admin.initializeApp();
+
 const db = admin.firestore();
+
+const FUNCTIONS_REGION = "europe-west1"
 
 const deleteCollection = async (collection: string) =>
 {
@@ -19,8 +23,7 @@ const deleteCollection = async (collection: string) =>
     process.nextTick(() => deleteCollection(collection));
 }
 
-
-export const deleteCircolare = functions.https.onCall(async (data, context) =>
+export const deleteCircolare = functions.region(FUNCTIONS_REGION).https.onCall(async (data, context) =>
 {
     if (!context.auth || !data.id) return;
 
