@@ -99,7 +99,20 @@ class Home extends StatelessWidget {
               }
             )
           :
-            Container(),
+            Container(
+              width: double.infinity,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Accedi per creare circolari"),
+                  FlatButton.icon(
+                    icon: Icon(Icons.login),
+                    label: Text("Accedi"),
+                    onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => SignIn())),
+                  ),
+                ],
+              ),
+            ),
         floatingActionButton: !_isSignedIn() ? null : Builder(
           builder: (context) => FloatingActionButton(
             child: Icon(Icons.add),
