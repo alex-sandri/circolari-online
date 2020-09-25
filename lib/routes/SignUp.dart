@@ -1,3 +1,4 @@
+import 'package:circolari_online/routes/Home.dart';
 import 'package:circolari_online/routes/SignIn.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -58,6 +59,11 @@ class _SignUpState extends State<SignUp> {
                   await FirebaseAuth.instance.createUserWithEmailAndPassword(
                     email: _emailController.text,
                     password: _passwordController.text,
+                  );
+
+                  Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => Home()),
+                    (route) => false
                   );
                 }
                 on FirebaseAuthException catch (e)
