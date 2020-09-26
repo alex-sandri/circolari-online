@@ -1,3 +1,4 @@
+import 'package:circolari_online/routes/Home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +12,42 @@ class Settings extends StatelessWidget {
         appBar: AppBar(
           title: Text("Impostazioni"),
         ),
-        body: Container(),
+        body: ListView(
+          children: [
+            ListTile(
+              leading: Icon(Icons.delete),
+              title: Text("Elimina account"),
+              onTap: () => showDialog(
+                context: context,
+                child: AlertDialog(
+                  title: Text("Elimina account"),
+                  content: Text("Eliminando il tuo account perderai tutte le circolari create e le loro relative risposte"),
+                  actions: [
+                    FlatButton(
+                      child: Text("Annulla"),
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
+                    FlatButton(
+                      child: Text("OK"),
+                      onPressed: () async {
+                        Navigator.of(context).pop();
+
+                        // TODO: Delete account
+
+                        Navigator
+                          .of(context)
+                          .pushAndRemoveUntil(
+                            MaterialPageRoute(builder: (context) => Home()),
+                            (route) => false,
+                          );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
