@@ -38,12 +38,19 @@ class CircolareAnswerPage extends StatelessWidget {
             itemBuilder: (context, index) {
               final Map<String, dynamic> field = answer.fields[index];
 
+              String value;
+
+              if (field["value"].runtimeType == bool) value = field["value"] ? "Sì" : "No";
+              else if (field["value"] == "") value = "Non inserito";
+              else value = field["value"].toString();
+
               return ListTile(
                 title: SelectableText(field["label"]),
                 subtitle: SelectableText(
-                  field["value"].runtimeType == bool
-                    ? (field["value"] ? "Sì" : "No")
-                    : field["value"].toString(),
+                  value,
+                  style: TextStyle(
+                    fontStyle: field["value"] == "" ? FontStyle.italic : null,
+                  ),
                 ),
               );
             }
