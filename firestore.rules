@@ -4,8 +4,14 @@ service cloud.firestore {
     match /circolari/{circolareId} {
       allow read: if true;
 
-      allow create: if incomingData().title.size() > 0
+      allow create: if allowOnly([ "title", "description", "fields", "metadata" ])
+        && incomingData().title is string
+        && incomingData().title.size() > 0
+        && incomingData().description is string
+        && incomingData().fields is list
         && incomingData().fields.size() > 0
+        && incomingData().metadata is map
+        && incomingData().metadata.createdAt == request.time
         && incomingData().metadata.owner == request.auth.uid;
 
       allow update: if incomingData().metadata.owner == request.auth.uid
@@ -43,5 +49,11 @@ service cloud.firestore {
 
   function incomingData() {
     return request.resource.data;
+  }
+
+  function allowOnly(fields) {
+    return incomingData().keys().size() == fields.size()
+      && incomingData().keys().hasOnly(fields)
+      && incomingData().keys().hasAll(fields);
   }
 }

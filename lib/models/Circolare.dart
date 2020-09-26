@@ -53,6 +53,7 @@ class Circolare
 
   Map<String, dynamic> toFirestore() => {
     "title": title,
+    "description": description,
     "fields": fields.map((field) => {
       "type": field.type,
       "label": field.label,
@@ -65,7 +66,7 @@ class Circolare
     Circolare(
       id: document.id,
       title: document.data()["title"],
-      description: document.data()["title"],
+      description: document.data()["description"],
       fields: (document.data()["fields"] as List).map((field) => CircolareField(
         type: field["type"],
         label: field["label"],
