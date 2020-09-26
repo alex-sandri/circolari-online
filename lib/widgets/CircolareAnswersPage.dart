@@ -54,7 +54,10 @@ class CircolareAnswersPage extends StatelessWidget {
                 StreamBuilder<QuerySnapshot>(
                   stream: _db.collection("circolari/${circolare.id}/answers").snapshots(),
                   builder: (context, snapshot) {
-                    if (!snapshot.hasData) return LinearProgressIndicator();
+                    if (!snapshot.hasData)
+                      return Column(
+                        children: [ LinearProgressIndicator() ]
+                      );
 
                     if (snapshot.data.docs.isEmpty)
                       return Center(
