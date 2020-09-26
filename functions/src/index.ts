@@ -7,11 +7,11 @@ const db = admin.firestore();
 
 const FUNCTIONS_REGION = "europe-west1";
 
-const deleteCollection = async (collection: string) =>
+const deleteQuery = async (query: FirebaseFirestore.Query) =>
 {
-    const snapshot = await db.collection(collection).limit(500).get();
+    const snapshot = await query.limit(500).get();
 
-    if (snapshot.size === 0) return;
+    if (snapshot.empty) return;
 
     const batch = db.batch();
 
@@ -20,7 +20,7 @@ const deleteCollection = async (collection: string) =>
     await batch.commit();
 
     // Recurse on the next process tick, to avoid exploding the stack.
-    process.nextTick(() => deleteCollection(collection));
+    process.nextTick(() => deleteQuery(query));
 }
 
 const getCircolare = async (id: string): Promise<Circolare> =>
@@ -28,6 +28,11 @@ const getCircolare = async (id: string): Promise<Circolare> =>
 
 const getAnswer = async (circolareId: string, answerId: string): Promise<Answer> =>
     (await db.collection(`circolari/${circolareId}/answers`).doc(answerId).get()).data() as Answer;
+
+export const deleteUser = functions.region(FUNCTIONS_REGION).auth.user().onDelete(async (user) =>
+{
+    await deleteQuery(db.collection(`circolari`).where("metadata.owner", "==", user.uid));
+});
 
 export const deleteCircolare = functions.region(FUNCTIONS_REGION).https.onCall(async (data, context) =>
 {
@@ -40,8 +45,11 @@ export const deleteCircolare = functions.region(FUNCTIONS_REGION).https.onCall(a
     if (circolare.metadata.owner != context.auth.uid) return;
 
     await db.collection("circolari").doc(id).delete();
+});
 
-    await deleteCollection(`circolari/${id}/answers`);
+export const deleteCircolareFirestore = functions.region(FUNCTIONS_REGION).firestore.document("circolari/{circolareId}").onDelete(async (snapshot, context) =>
+{
+    await deleteQuery(db.collection(`circolari/${context.params.circolareId}/answers`));
 });
 
 export const validateAnswer = functions.region(FUNCTIONS_REGION).firestore.document("circolari/{circolareId}/answers/{answerId}").onCreate(async (snapshot, context) =>
