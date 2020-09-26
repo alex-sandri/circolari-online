@@ -86,7 +86,14 @@ class CircolarePage extends StatelessWidget {
                 ),
                 ListView(
                   children: [
-                    // TODO
+                    ListTile(
+                      title: Text("Titolo"),
+                      subtitle: SelectableText(circolare.title),
+                    ),
+                    ListTile(
+                      title: Text("Descrizione"),
+                      subtitle: SelectableText(circolare.description),
+                    ),
                   ],
                 ),
               ],
