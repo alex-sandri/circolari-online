@@ -37,3 +37,8 @@ export const deleteCircolare = functions.region(FUNCTIONS_REGION).https.onCall(a
 
     await deleteCollection(`circolari/${id}/answers`);
 });
+
+export const validateAnswer = functions.region(FUNCTIONS_REGION).firestore.document("circolari/{circolareId}/answers/{answerId}").onCreate(async (snapshot, context) =>
+{
+    // TODO
+});
