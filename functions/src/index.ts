@@ -59,12 +59,14 @@ export const validateAnswer = functions.region(FUNCTIONS_REGION).firestore.docum
     {
         const answeredField = answer.fields.find((answerField) => answerField.label == field.label);
 
-        if (!answeredField)
+        if (!answeredField || (answeredField.value == "" && field.isRequired))
         {
             isValid = false;
 
             return;
         }
+
+        if (answeredField.value == "" && !field.isRequired) return;
 
         if (field.type == "string" && typeof answeredField.value != "string") isValid = false;
         else if (field.type == "int" && !Number.isInteger(answeredField.value)) isValid = false;
