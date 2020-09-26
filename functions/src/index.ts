@@ -53,7 +53,26 @@ export const validateAnswer = functions.region(FUNCTIONS_REGION).firestore.docum
 
     const answer: Answer = await getAnswer(circolareId, answerId);
 
-    // TODO
+    let isValid = true;
+
+    circolare.fields.forEach(field =>
+    {
+        const answeredField = answer.fields.find((answerField) => answerField.label == field.label);
+
+        if (!answeredField)
+        {
+            isValid = false;
+
+            return;
+        }
+
+        if (field.type == "string" && typeof answeredField.value != "string") isValid = false;
+        else if (field.type == "int" && !Number.isInteger(answeredField.value)) isValid = false;
+        else if (field.type == "double" && typeof answeredField.value != "number") isValid = false;
+        else if (field.type == "bool" && typeof answeredField.value != "boolean") isValid = false;
+    });
+
+    if (!isValid) await snapshot.ref.delete();
 });
 
 interface Circolare
