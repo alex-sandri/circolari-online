@@ -5,22 +5,19 @@ import 'package:circolari_online/routes/SignIn.dart' as routes;
 import 'package:circolari_online/widgets/CircolareAnswersPage.dart';
 import 'package:circolari_online/widgets/CircolarePage.dart';
 import 'package:circolari_online/widgets/CreateCircolarePage.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
-  final FirebaseAuth auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  final FirebaseFirestore db = FirebaseFirestore.instance;
-
-  bool _isSignedIn() => auth.currentUser != null;
+  bool _isSignedIn() => _auth.currentUser != null;
 
   @override
   Widget build(BuildContext context) {
     return Material(
       child: StreamBuilder<User>(
-        stream: auth.authStateChanges(),
+        stream: _auth.authStateChanges(),
         builder: (context, snapshot) {
           return Scaffold(
             appBar: AppBar(
@@ -78,7 +75,7 @@ class Home extends StatelessWidget {
                   IconButton(
                     icon: Icon(Icons.exit_to_app),
                     tooltip: "Esci",
-                    onPressed: auth.signOut,
+                    onPressed: _auth.signOut,
                   ),
 
                 if (!_isSignedIn())

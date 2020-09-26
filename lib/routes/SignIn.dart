@@ -9,7 +9,7 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
-  final FirebaseAuth auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   final TextEditingController _emailController = TextEditingController();
 
@@ -56,7 +56,7 @@ class _SignInState extends State<SignIn> {
               onPressed: () async {
                 try
                 {
-                  await FirebaseAuth.instance.signInWithEmailAndPassword(
+                  await _auth.signInWithEmailAndPassword(
                     email: _emailController.text,
                     password: _passwordController.text,
                   );
