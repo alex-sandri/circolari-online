@@ -79,21 +79,12 @@ interface Circolare
 
 interface Answer
 {
-    title: string,
-
     fields: {
         label: string,
-        type: "string" | "int" | "double" | "bool",
-        defaultValue: any,
-        isRequired: boolean,
+        value: any,
     }[],
 
-    settings?: {
-        acceptNewAnswers?: boolean,
-    },
-
     metadata: {
-        owner: string,
-        createdAt: FirebaseFirestore.Timestamp,
+        sent: FirebaseFirestore.Timestamp,
     },
 }
