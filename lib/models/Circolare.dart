@@ -65,6 +65,7 @@ class Circolare
     Circolare(
       id: document.id,
       title: document.data()["title"],
+      description: document.data()["title"],
       fields: (document.data()["fields"] as List).map((field) => CircolareField(
         type: field["type"],
         label: field["label"],
