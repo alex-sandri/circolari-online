@@ -131,16 +131,34 @@ class CircolareSettingsWidget extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.zero,
                 ),
-                onPressed: () async {
-                  await circolare.delete();
+                onPressed: () => showDialog(
+                  context: context,
+                  child: AlertDialog(
+                    title: Text("Conferma eliminazione"),
+                    content: Text("La circolare non potrà più essere recuperata una volta eliminata"),
+                    actions: [
+                      FlatButton(
+                        child: Text("Annulla"),
+                        onPressed: () => Navigator.of(context).pop(),
+                      ),
+                      FlatButton(
+                        child: Text("OK"),
+                        onPressed: () async {
+                          Navigator.of(context).pop();
 
-                  Navigator
-                    .of(context)
-                    .pushAndRemoveUntil(
-                      MaterialPageRoute(builder: (context) => Home()),
-                      (route) => false,
-                    );
-                },
+                          await circolare.delete();
+
+                          Navigator
+                            .of(context)
+                            .pushAndRemoveUntil(
+                              MaterialPageRoute(builder: (context) => Home()),
+                              (route) => false,
+                            );
+                        },
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
           ],
