@@ -14,7 +14,7 @@ service cloud.firestore {
       match /answers/{answerId} {
         allow read: if get(/databases/$(database)/documents/circolari/$(circolareId)).data.metadata.owner == request.auth.uid;
 
-        allow create: if incomingData().fields.size() > 0
+        allow create: if incomingData().fields.size() == get(/databases/$(database)/documents/circolari/$(circolareId)).data.fields.size()
           && incomingData().metadata.sent == request.time
           && allowNewAnswers();
 
