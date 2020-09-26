@@ -263,6 +263,7 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
 
                     await Circolare(
                       title: _titleController.text,
+                      description: _descriptionController.text,
                       fields: _fields,
                     ).create();
 

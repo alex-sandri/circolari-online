@@ -14,11 +14,14 @@ class Circolare
 
   final String title;
 
+  final String description;
+
   final List<CircolareField> fields;
 
   Circolare({
     this.id,
     @required this.title,
+    @required this.description,
     @required this.fields,
   });
 
