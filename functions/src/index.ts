@@ -39,7 +39,7 @@ export const deleteCircolare = functions.region(FUNCTIONS_REGION).https.onCall(a
 
     if (circolare.metadata.owner != context.auth.uid) return;
 
-    await db.collection("circolare").doc(id).delete();
+    await db.collection("circolari").doc(id).delete();
 
     await deleteCollection(`circolari/${id}/answers`);
 });
