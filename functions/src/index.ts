@@ -5,7 +5,7 @@ admin.initializeApp();
 
 const db = admin.firestore();
 
-const FUNCTIONS_REGION = "europe-west1"
+const FUNCTIONS_REGION = "europe-west1";
 
 const deleteCollection = async (collection: string) =>
 {
@@ -23,22 +23,77 @@ const deleteCollection = async (collection: string) =>
     process.nextTick(() => deleteCollection(collection));
 }
 
+const getCircolare = async (id: string): Promise<Circolare> =>
+    (await db.collection("circolari").doc(id).get()).data() as Circolare;
+
+const getAnswer = async (circolareId: string, answerId: string): Promise<Answer> =>
+    (await db.collection(`circolari/${circolareId}/answers`).doc(answerId).get()).data() as Answer;
+
 export const deleteCircolare = functions.region(FUNCTIONS_REGION).https.onCall(async (data, context) =>
 {
     if (!context.auth || !data.id) return;
 
     const id: string = data.id;
 
-    const doc = await db.collection("circolari").doc(id).get();
+    const circolare: Circolare = await getCircolare(id);
 
-    if ((doc.data() as FirebaseFirestore.DocumentData).metadata.owner != context.auth.uid) return;
+    if (circolare.metadata.owner != context.auth.uid) return;
 
-    await doc.ref.delete();
+    await db.collection("circolare").doc(id).delete();
 
     await deleteCollection(`circolari/${id}/answers`);
 });
 
 export const validateAnswer = functions.region(FUNCTIONS_REGION).firestore.document("circolari/{circolareId}/answers/{answerId}").onCreate(async (snapshot, context) =>
 {
+    const circolareId: string = context.params.circolareId;
+    const answerId: string = context.params.answerId;
+
+    const circolare: Circolare = await getCircolare(circolareId);
+
+    const answer: Answer = await getAnswer(circolareId, answerId);
+
     // TODO
 });
+
+interface Circolare
+{
+    title: string,
+
+    fields: {
+        label: string,
+        type: "string" | "int" | "double" | "bool",
+        defaultValue: any,
+        isRequired: boolean,
+    }[],
+
+    settings?: {
+        acceptNewAnswers?: boolean,
+    },
+
+    metadata: {
+        owner: string,
+        createdAt: FirebaseFirestore.Timestamp,
+    },
+}
+
+interface Answer
+{
+    title: string,
+
+    fields: {
+        label: string,
+        type: "string" | "int" | "double" | "bool",
+        defaultValue: any,
+        isRequired: boolean,
+    }[],
+
+    settings?: {
+        acceptNewAnswers?: boolean,
+    },
+
+    metadata: {
+        owner: string,
+        createdAt: FirebaseFirestore.Timestamp,
+    },
+}
