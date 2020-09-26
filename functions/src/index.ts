@@ -81,6 +81,8 @@ interface Circolare
 {
     title: string,
 
+    description: string,
+
     fields: {
         label: string,
         type: "string" | "int" | "double" | "bool",
