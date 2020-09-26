@@ -18,7 +18,7 @@ service cloud.firestore {
           && incomingData().metadata.sent == request.time
           && allowNewAnswers();
 
-        allow update: if incomingData().fields.diff(existingData().fields).affectedKeys().size() == 0
+        allow update: if incomingData().fields == existingData().fields
           && incomingData().metadata.sent == existingData().metadata.sent
           && incomingData().metadata.handled == true;
 
