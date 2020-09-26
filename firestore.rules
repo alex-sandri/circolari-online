@@ -4,7 +4,9 @@ service cloud.firestore {
     match /circolari/{circolareId} {
       allow read: if true;
 
-      allow create: if incomingData().metadata.owner == request.auth.uid;
+      allow create: if incomingData().title.size() > 0
+        && incomingData().fields.size() > 0
+        && incomingData().metadata.owner == request.auth.uid;
 
       allow update: if incomingData().metadata.owner == request.auth.uid
         && incomingData().diff(existingData()).affectedKeys().hasOnly([ "settings" ]);
