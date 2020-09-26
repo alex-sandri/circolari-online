@@ -1,6 +1,7 @@
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:circolari_online/models/Circolare.dart';
-import 'package:circolari_online/routes/SignIn.dart';
+import 'package:circolari_online/routes/Settings.dart' as routes;
+import 'package:circolari_online/routes/SignIn.dart' as routes;
 import 'package:circolari_online/widgets/CircolareAnswersPage.dart';
 import 'package:circolari_online/widgets/CircolarePage.dart';
 import 'package:circolari_online/widgets/CreateCircolarePage.dart';
@@ -67,19 +68,24 @@ class Home extends StatelessWidget {
                     }
                   },
                 ),
+                IconButton(
+                  icon: Icon(Icons.settings),
+                  tooltip: "Impostazioni",
+                  onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => routes.Settings())),
+                ),
 
                 if (_isSignedIn())
                   IconButton(
                     icon: Icon(Icons.exit_to_app),
                     tooltip: "Esci",
-                    onPressed: FirebaseAuth.instance.signOut,
+                    onPressed: auth.signOut,
                   ),
 
                 if (!_isSignedIn())
                   IconButton(
                     icon: Icon(Icons.login),
                     tooltip: "Accedi",
-                    onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => SignIn())),
+                    onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => routes.SignIn())),
                   ),
               ],
             ),
@@ -124,7 +130,7 @@ class Home extends StatelessWidget {
                       FlatButton.icon(
                         icon: Icon(Icons.login),
                         label: Text("Accedi"),
-                        onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => SignIn())),
+                        onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => routes.SignIn())),
                       ),
                     ],
                   ),
