@@ -32,7 +32,17 @@ class Settings extends StatelessWidget {
                       onPressed: () async {
                         Navigator.of(context).pop();
 
-                        // TODO: Delete account
+                        try
+                        {
+                          await _auth.currentUser.delete();
+                        }
+                        on FirebaseAuthException catch (e)
+                        {
+                          if (e.code == "requires-recent-login")
+                          {
+                            // TODO
+                          }
+                        }
 
                         Navigator
                           .of(context)
