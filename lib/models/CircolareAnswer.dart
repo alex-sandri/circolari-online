@@ -8,7 +8,7 @@ class CircolareAnswer
   /// The `id` of the `Circolare` this answer belongs to
   final String parentId;
 
-  final Map<String, dynamic> fields;
+  final List<Map<String, dynamic>> fields;
 
   final Map<String, dynamic> metadata;
 
@@ -23,7 +23,7 @@ class CircolareAnswer
     CircolareAnswer(
       id: document.id,
       parentId: document.reference.parent.parent.id,
-      fields: document.data()["fields"],
+      fields: (document.data()["fields"] as List<dynamic>).whereType<Map<String, dynamic>>()?.toList(),
       metadata: document.data()["metadata"],
     );
 }
