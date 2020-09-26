@@ -12,6 +12,8 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
 
   final TextEditingController _titleController = TextEditingController();
 
+  final TextEditingController _descriptionController = TextEditingController();
+
   String _titleError;
 
   @override
@@ -194,6 +196,17 @@ class _CreateCircolarePageState extends State<CreateCircolarePage> {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) => value.isEmpty ? "Il titolo non può essere vuoto" : null,
                   onChanged: (value) => setState(() => _titleError = null),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: TextFormField(
+                  controller: _descriptionController,
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
+                  decoration: InputDecoration(
+                    labelText: "Descrizione",
+                  ),
                 ),
               ),
               Divider(),
