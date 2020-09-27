@@ -42,7 +42,7 @@ class Home extends StatelessWidget {
                     {
                       final String id = result.rawContent;
 
-                      final Circolare circolare = await Circolare.get(id);
+                      final Circolare circolare = await Circolare.get(id).first;
 
                       if (circolare == null)
                       {

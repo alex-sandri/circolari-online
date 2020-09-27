@@ -36,12 +36,11 @@ class Circolare
 
   Future<void> delete() => CloudFunctions(region: "europe-west1").getHttpsCallable(functionName: "deleteCircolare").call({ "id": id });
 
-  static Future<Circolare> get(String id) async {
-    final DocumentSnapshot document = await _db.collection("circolari").doc(id).get();
-
-    if (!document.exists) return null;
-
-    return Circolare.fromFirestore(document);
+  static Stream<Circolare> get(String id) async* {
+    await for (final DocumentSnapshot snapshot in await _db.collection("circolari").doc(id).snapshots())
+    {
+      yield Circolare.fromFirestore(snapshot);
+    }
   }
 
   static Stream<List<Circolare>> getAll() async* {
