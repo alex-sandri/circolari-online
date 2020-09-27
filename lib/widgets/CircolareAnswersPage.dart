@@ -3,6 +3,7 @@ import 'package:circolari_online/models/CircolareAnswer.dart';
 import 'package:circolari_online/models/CircolareSettings.dart';
 import 'package:circolari_online/routes/Home.dart';
 import 'package:circolari_online/widgets/CircolareAnswerPage.dart';
+import 'package:circolari_online/widgets/CircolarePage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -18,7 +19,7 @@ class CircolareAnswersPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       child: DefaultTabController(
-        length: 2,
+        length: 3,
         child: GestureDetector(
           onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
           child: Scaffold(
@@ -46,6 +47,7 @@ class CircolareAnswersPage extends StatelessWidget {
                 tabs: [
                   Tab(icon: Icon(Icons.question_answer), text: "Risposte"),
                   Tab(icon: Icon(Icons.settings), text: "Impostazioni"),
+                  Tab(icon: Icon(Icons.preview), text: "Anteprima"),
                 ],
               ),
             ),
@@ -86,6 +88,7 @@ class CircolareAnswersPage extends StatelessWidget {
                   }
                 ),
                 CircolareSettingsWidget(circolare),
+                CircolarePage(circolare, isPreview: true),
               ],
             ),
           ),
