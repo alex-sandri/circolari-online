@@ -4,6 +4,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SignIn extends StatefulWidget {
+  final bool reauthenticate;
+
+  SignIn({ this.reauthenticate = false });
+
   @override
   _SignInState createState() => _SignInState();
 }
@@ -56,10 +60,20 @@ class _SignInState extends State<SignIn> {
               onPressed: () async {
                 try
                 {
-                  await _auth.signInWithEmailAndPassword(
-                    email: _emailController.text,
-                    password: _passwordController.text,
-                  );
+                  if (widget.reauthenticate)
+                  {
+                    EmailAuthCredential credential = EmailAuthProvider.credential(
+                      email: _emailController.text,
+                      password: _passwordController.text,
+                    );
+
+                    await _auth.currentUser.reauthenticateWithCredential(credential);
+                  }
+                  else
+                    await _auth.signInWithEmailAndPassword(
+                      email: _emailController.text,
+                      password: _passwordController.text,
+                    );
 
                   Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(builder: (context) => Home()),

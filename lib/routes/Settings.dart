@@ -1,4 +1,5 @@
 import 'package:circolari_online/routes/Home.dart';
+import 'package:circolari_online/routes/SignIn.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -35,21 +36,23 @@ class Settings extends StatelessWidget {
                         try
                         {
                           await _auth.currentUser.delete();
+
+                          Navigator
+                            .of(context)
+                            .pushAndRemoveUntil(
+                              MaterialPageRoute(builder: (context) => Home()),
+                              (route) => false,
+                            );
                         }
                         on FirebaseAuthException catch (e)
                         {
                           if (e.code == "requires-recent-login")
                           {
-                            // TODO
+                            Navigator
+                              .of(context)
+                              .push(MaterialPageRoute(builder: (context) => SignIn(reauthenticate: true)));
                           }
                         }
-
-                        Navigator
-                          .of(context)
-                          .pushAndRemoveUntil(
-                            MaterialPageRoute(builder: (context) => Home()),
-                            (route) => false,
-                          );
                       },
                     ),
                   ],
