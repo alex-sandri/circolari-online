@@ -109,7 +109,14 @@ class CircolarePage extends StatelessWidget {
                         ),
                         ListTile(
                           title: Text("Descrizione"),
-                          subtitle: SelectableText(circolare.description),
+                          subtitle: SelectableText(
+                            circolare.description.isNotEmpty
+                              ? circolare.description
+                              : "Non specificata",
+                            style: TextStyle(
+                              fontStyle: circolare.description.isEmpty ? FontStyle.italic : null,
+                            ),
+                          ),
                         ),
                       ],
                     ),
