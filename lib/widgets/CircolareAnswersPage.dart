@@ -115,6 +115,35 @@ class CircolareSettingsWidget extends StatelessWidget {
             Expanded(
               child: ListView(
                 children: [
+                  ListTile(
+                    title: Text("Titolo"),
+                    subtitle: SelectableText(circolare.title),
+                    trailing: IconButton(
+                      icon: Icon(Icons.edit),
+                      tooltip: "Modifica",
+                      onPressed: () {
+                        // TODO
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    title: Text("Descrizione"),
+                    subtitle: SelectableText(
+                      circolare.description.isNotEmpty
+                        ? circolare.description
+                        : "Non specificata",
+                      style: TextStyle(
+                        fontStyle: circolare.description.isEmpty ? FontStyle.italic : null,
+                      ),
+                    ),
+                    trailing: IconButton(
+                      icon: Icon(Icons.edit),
+                      tooltip: "Modifica",
+                      onPressed: () {
+                        // TODO
+                      },
+                    ),
+                  ),
                   SwitchListTile(
                     title: Text("Accetta nuove risposte"),
                     value: snapshot.data.allowNewAnswers,
