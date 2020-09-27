@@ -42,25 +42,10 @@ class Home extends StatelessWidget {
                     {
                       final String id = result.rawContent;
 
-                      final Circolare circolare = await Circolare.get(id).first;
-
-                      if (circolare == null)
-                      {
-                        showDialog(
-                          context: context,
-                          child: AlertDialog(
-                            title: Text("Errore"),
-                            content: Text("Circolare inesistente"),
-                          ),
-                        );
-
-                        return;
-                      }
-
                       Navigator
                         .of(context)
                         .push(MaterialPageRoute(
-                          builder: (context) => CircolarePage(circolare),
+                          builder: (context) => CircolarePage(id),
                         ));
                     }
                   },

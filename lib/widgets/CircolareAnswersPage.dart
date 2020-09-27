@@ -88,7 +88,7 @@ class CircolareAnswersPage extends StatelessWidget {
                   }
                 ),
                 CircolareSettingsWidget(circolare),
-                CircolarePage(circolare, isPreview: true),
+                CircolarePage(circolare.id, isPreview: true),
               ],
             ),
           ),
