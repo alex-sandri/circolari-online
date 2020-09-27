@@ -68,17 +68,21 @@ class _SignInState extends State<SignIn> {
                     );
 
                     await _auth.currentUser.reauthenticateWithCredential(credential);
+
+                    Navigator.of(context).pop();
                   }
                   else
+                  {
                     await _auth.signInWithEmailAndPassword(
                       email: _emailController.text,
                       password: _passwordController.text,
                     );
 
-                  Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (context) => Home()),
-                    (route) => false
-                  );
+                    Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (context) => Home()),
+                      (route) => false
+                    );
+                  }
                 }
                 on FirebaseAuthException catch (e)
                 {
