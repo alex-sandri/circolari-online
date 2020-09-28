@@ -180,6 +180,8 @@ class CircolareSettingsWidget extends StatelessWidget {
                                 children: [
                                   TextFormField(
                                     controller: controller,
+                                    keyboardType: TextInputType.multiline,
+                                    maxLines: null,
                                     decoration: InputDecoration(
                                       labelText: "Descrizione",
                                     ),
