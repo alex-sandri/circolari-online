@@ -175,8 +175,8 @@ class CircolareSettingsWidget extends StatelessWidget {
                           child: Dialog(
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
+                              child: ListView(
+                                shrinkWrap: true,
                                 children: [
                                   TextFormField(
                                     controller: controller,
