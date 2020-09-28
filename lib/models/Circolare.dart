@@ -34,6 +34,8 @@ class Circolare
       ...this.toFirestore(),
     });
 
+  Future<void> update(String field, dynamic value) => _db.collection("circolari").doc(id).update({ field: value });
+
   Future<void> delete() => CloudFunctions(region: "europe-west1").getHttpsCallable(functionName: "deleteCircolare").call({ "id": id });
 
   static Stream<Circolare> get(String id) async* {
