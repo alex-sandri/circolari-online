@@ -5,9 +5,8 @@ service cloud.firestore {
       allow read: if true;
 
       allow create: if allowOnly([ "title", "description", "fields", "metadata" ])
-        && incomingData().title is string
-        && incomingData().title.size() > 0
-        && incomingData().description is string
+        && isValidTitle(incomingData().title)
+        && isValidDescription(incomingData().description)
         && incomingData().fields is list
         && incomingData().fields.size() > 0
         && incomingData().metadata is map
@@ -15,9 +14,20 @@ service cloud.firestore {
         && incomingData().metadata.owner == request.auth.uid;
 
       allow update: if incomingData().metadata.owner == request.auth.uid
-        && incomingData().diff(existingData()).affectedKeys().hasOnly([ "settings" ]);
+        && incomingData().diff(existingData()).affectedKeys().hasOnly([ "title", "description" "settings" ])
+        && isValidTitle(incomingData().title)
+        && isValidDescription(incomingData().description);
 
       allow delete: if false;
+
+      function isValidTitle(title) {
+        return title is string
+        && title.size() > 0;
+      }
+
+      function isValidDescription(description) {
+        return .description is string;
+      }
 
       match /answers/{answerId} {
         allow read: if get(/databases/$(database)/documents/circolari/$(circolareId)).data.metadata.owner == request.auth.uid;
