@@ -140,7 +140,11 @@ class CircolareSettingsWidget extends StatelessWidget {
                                   ),
                                   FlatButton(
                                     child: Text("Conferma"),
-                                    onPressed: () => circolare.update("title", controller.text),
+                                    onPressed: () async {
+                                      await circolare.update("title", controller.text);
+
+                                      Navigator.of(context).pop();
+                                    },
                                   ),
                                 ],
                               ),
@@ -182,7 +186,11 @@ class CircolareSettingsWidget extends StatelessWidget {
                                   ),
                                   FlatButton(
                                     child: Text("Conferma"),
-                                    onPressed: () => circolare.update("description", controller.text),
+                                    onPressed: () async {
+                                      await circolare.update("description", controller.text);
+
+                                      Navigator.of(context).pop();
+                                    },
                                   ),
                                 ],
                               ),
