@@ -14,7 +14,7 @@ service cloud.firestore {
         && incomingData().metadata.owner == request.auth.uid;
 
       allow update: if incomingData().metadata.owner == request.auth.uid
-        && incomingData().diff(existingData()).affectedKeys().hasOnly([ "title", "description" "settings" ])
+        && incomingData().diff(existingData()).affectedKeys().hasOnly([ "title", "description", "settings" ])
         && isValidTitle(incomingData().title)
         && isValidDescription(incomingData().description);
 
@@ -26,7 +26,7 @@ service cloud.firestore {
       }
 
       function isValidDescription(description) {
-        return .description is string;
+        return description is string;
       }
 
       match /answers/{answerId} {
