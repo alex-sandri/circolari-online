@@ -122,7 +122,32 @@ class CircolareSettingsWidget extends StatelessWidget {
                       icon: Icon(Icons.edit),
                       tooltip: "Modifica",
                       onPressed: () {
-                        // TODO
+                        final TextEditingController controller = TextEditingController();
+
+                        showDialog(
+                          context: context,
+                          child: Dialog(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  TextFormField(
+                                    controller: controller,
+                                    initialValue: circolare.title,
+                                    decoration: InputDecoration(
+                                      labelText: "Titolo",
+                                    ),
+                                  ),
+                                  FlatButton(
+                                    child: Text("Conferma"),
+                                    onPressed: () => circolare.update("title", controller.text),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
                       },
                     ),
                   ),
@@ -140,7 +165,32 @@ class CircolareSettingsWidget extends StatelessWidget {
                       icon: Icon(Icons.edit),
                       tooltip: "Modifica",
                       onPressed: () {
-                        // TODO
+                        final TextEditingController controller = TextEditingController();
+
+                        showDialog(
+                          context: context,
+                          child: Dialog(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  TextFormField(
+                                    controller: controller,
+                                    initialValue: circolare.description,
+                                    decoration: InputDecoration(
+                                      labelText: "Descrizione",
+                                    ),
+                                  ),
+                                  FlatButton(
+                                    child: Text("Conferma"),
+                                    onPressed: () => circolare.update("description", controller.text),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
                       },
                     ),
                   ),
