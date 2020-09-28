@@ -122,7 +122,7 @@ class CircolareSettingsWidget extends StatelessWidget {
                       icon: Icon(Icons.edit),
                       tooltip: "Modifica",
                       onPressed: () {
-                        final TextEditingController controller = TextEditingController();
+                        final TextEditingController controller = TextEditingController(text: circolare.title);
 
                         showDialog(
                           context: context,
@@ -134,7 +134,6 @@ class CircolareSettingsWidget extends StatelessWidget {
                                 children: [
                                   TextFormField(
                                     controller: controller,
-                                    initialValue: circolare.title,
                                     decoration: InputDecoration(
                                       labelText: "Titolo",
                                     ),
@@ -165,7 +164,7 @@ class CircolareSettingsWidget extends StatelessWidget {
                       icon: Icon(Icons.edit),
                       tooltip: "Modifica",
                       onPressed: () {
-                        final TextEditingController controller = TextEditingController();
+                        final TextEditingController controller = TextEditingController(text: circolare.description);
 
                         showDialog(
                           context: context,
@@ -177,7 +176,6 @@ class CircolareSettingsWidget extends StatelessWidget {
                                 children: [
                                   TextFormField(
                                     controller: controller,
-                                    initialValue: circolare.description,
                                     decoration: InputDecoration(
                                       labelText: "Descrizione",
                                     ),
